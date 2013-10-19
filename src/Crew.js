@@ -1,29 +1,53 @@
 var Crew = function() {
     this.name = GetRandomPerson();
-    this.morale = 0;
-    this.hunger = 3;
-    this.rank = 4;
+    this.morale = Crew.MoraleEnum.Happy;
+    this.hunger = Crew.HungerEnum.Full;
+    this.rank = Crew.RankEnum.DeckHand;
 }
 
 Crew.HungerEnum = {
-    "Starving" : 0,
-    "Hungry" : 1,
-    "Content" : 2,
-    "Full" : 3,
+    Starving : 0,
+    Hungry : 1,
+    Content : 2,
+    Full : 3,
+}
+
+Crew.HungerValues = {
+    0 : "Starving",
+    1 : "Hungry",
+    2 : "Content",
+    3 : "Full",
 }
 
 Crew.MoraleEnum = {
-    "Happy" : 0,
-    "Content" : 1,
-    "UnHappy" : 3,
-    "Mutinous" : 4,
+    Happy : 0,
+    Content : 1,
+    UnHappy : 3,
+    Mutinous : 4,
 }
 
-Crew.RoleEnum = {
-    "Captain" = 0,
-    "First Mate" = 1,
-    "Bosun" = 2,
-    "Watch Leader" = 3,
-    "DeckHand" = 4,
-    "Cook" = 5,
+Crew.MoraleValues = {
+    0 : "Happy",
+    1 : "Content",
+    2 : "Unhappy",
+    3 : "Mutinous",
+}
+
+Crew.RankEnum = {
+    Captain : 0,
+    FirstMate : 1,
+    Bosun : 2,
+    WatchLeader : 3,
+    DeckHand : 4,
+    Cook : 5,
+}
+
+
+Crew.RankValues =  {
+    0 : "Captain",
+    1 : "First Mate",
+    2 : "Bosun",
+    3 : "WatchLeader",
+    4 : "DeckHand",
+    5 : "Cook",
 }

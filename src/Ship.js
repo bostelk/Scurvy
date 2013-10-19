@@ -1,10 +1,23 @@
 var Ship = function(x, y) {
-    var CREW_SIZE = 20;
-    //var crewMembers = [];
-    //for( int i = 0; i < CREW_SIZE; i = crewMembers.push(new crew() );
+
+    this.crewMembers = [];
+
+    for( var i = 0; i < Ship.CREW_SIZE; ++i ){
+        this.crewMembers.push(new Crew());
+    }
+    // manage crew roles.
+    this.crewMembers[0].rank = Crew.RankEnum.Captain;
+    this.crewMembers[1].rank = Crew.RankEnum.FirstMate;
+    this.crewMembers[3].rank = Crew.RankEnum.Bosun;
+    this.crewMembers[4].rank = Crew.RankEnum.WatchLeader;
+    this.crewMembers[5].rank = Crew.RankEnum.WatchLeader;
+    this.crewMembers[6].rank = Crew.RankEnum.Cook;
+
     this._x = x;
     this._y = y;
 }
+
+Ship.CREW_SIZE = 20;
 
 Ship.prototype.getSpeed = function() { return 100; }
 Ship.prototype.getX = function() { return this._x; }
@@ -65,4 +78,26 @@ Ship.prototype.move = function (x, y) {
 
 Ship.prototype.draw = function() {
     G.display.draw(this._x, this._y, "b", "#00ffff");
+}
+
+Ship.prototype.displayCrew = function() {
+    for ( var i = 0; i < this.crewMembers.length; ++i ) {
+        var name = this.crewMembers[i].name;
+        console.log(name);
+    }
+}
+
+Ship.prototype.displayMorale = function() {
+    //console.log( Crew.RankValues[4]);
+    for ( var i = 0; i < this.crewMembers.length; ++i ) {
+        var moraleIndex = this.crewMembers[i].morale;
+        var moraleValue = Crew.MoraleValues[moraleIndex];
+        var rankIndex = this.crewMembers[i].rank;
+        var rankValue = Crew.RankValues[rankIndex];
+        var hungerIndex = this.crewMembers[i].hunger;
+        var hungerValue = Crew.HungerValues[hungerIndex];
+        var line = this.crewMembers[i].name + "-" + moraleValue + "-" + rankValue + "-" + hungerValue;
+
+        console.log(line);
+    }
 }
