@@ -1,7 +1,9 @@
 var GameState = {
     TITLE: 0,
-    DISCOVERY: 1,
-    FINISHED: 2
+    START_VOYAGE: 1,
+    VOYAGE: 2,
+    END_VOYAGE: 3,
+    FINISHED: 4
 };
 
 var Game = function () {
@@ -17,7 +19,9 @@ var Game = function () {
     this.map = null;
     this.ship = null;
     this.messages = [];
-    this.state = GameState.DISCOVERY;
+
+    this.state = null;
+    this.switchState (GameState.START_VOYAGE);
 
     this.date = null;
 };
@@ -68,52 +72,47 @@ Game.prototype.internalTick = function () {
 Game.prototype.tick = function () {
     switch (this.state) {
         case GameState.TITLE:
-            this.display.clear ();
             this.splash.tick ();
-            this.splash.draw ();
             if (this.splash.finished)
-                this.switchState (GameState.DISCOVERY);
+                this.switchState (GameState.VOYAGE);
             break;
-        case GameState.DISCOVERY:
-            this.draw ();
+        case GameState.START_VOYAGE:
+            break;
+        case GameState.VOYAGE:
+            break;
+        case GameState.END_VOYAGE:
+            break;
+        case GameState.FINISHED:
+            break;
+    }
+
+    this.draw ();
+};
+
+Game.prototype.draw = function () {
+    switch (this.state) {
+        case GameState.TITLE:
+            this.display.clear ();
+            this.splash.draw ();
+            break;
+        case GameState.START_VOYAGE:
+            this.drawStatus();
+            break;
+        case GameState.VOYAGE:
+            this.display.clear ();
+            this.map.draw ();
+            this.ship.draw ();
+            this.drawStatus();
+            //normal maps go here yo!
+            break;
+        case GameState.END_VOYAGE:
             break;
         case GameState.FINISHED:
             break;
     }
 };
 
-Game.prototype.log = function (message) {
-    message = message.toString ();
-    console.log (message);
-
-    if (this.messages.length > 4) {
-        this.messages.shift ();
-        this.messages.push (message);
-    } else {
-        this.messages.push (message);
-    }
-};
-
-Game.prototype.switchState = function (state) {
-    this.state = state;
-};
-
-Game.prototype.spendDays = function (amount) {
-    //fun
-    for ( var i = 0; i < amount; ++i) {
-        this.ship.consumeFood();
-    }
-    this.date.setTime(G.date.getTime() + 60 * 60 * 24 * 1000 * amount);
-};
-
-Game.prototype.draw = function () {
-    this.display.clear ();
-
-    this.map.draw ();
-    this.ship.draw ();
-
-    //normal maps go here yo!
-
+Game.prototype.drawStatus = function () {
     var info = "Ship:{0}   Hp:{1}/{2}   Crew:{3}/{4}   Date:{5}".format (
         this.ship,
         this.ship.health,
@@ -131,6 +130,67 @@ Game.prototype.draw = function () {
         var message = this.messages [this.messages.length - 1- i];
         this.display.drawText (0, 7 - i, message);
     }
+};
+
+Game.prototype.enterState = function (state) {
+    switch (this.state) {
+        case GameState.TITLE:
+            break;
+        case GameState.START_VOYAGE:
+            document.getElementById("start_voyage").style.display = "block";
+            document.getElementById("voyage").style.display = "none";
+            break;
+        case GameState.VOYAGE:
+            document.getElementById("start_voyage").style.display = "none";
+            document.getElementById("voyage").style.display = "block";
+            break;
+        case GameState.END_VOYAGE:
+            break;
+        case GameState.FINISHED:
+            break;
+    }
+};
+
+Game.prototype.exitState = function (state) {
+    switch (this.state) {
+        case GameState.TITLE:
+            break;
+        case GameState.START_VOYAGE:
+            break;
+        case GameState.VOYAGE:
+            break;
+        case GameState.END_VOYAGE:
+            break;
+        case GameState.FINISHED:
+            break;
+    }
+};
+
+Game.prototype.switchState = function (state) {
+    if (this.state != null)
+        this.exitState (this.state);
+    this.state = state;
+    this.enterState (this.state);
+};
+
+Game.prototype.log = function (message) {
+    message = message.toString ();
+    console.log (message);
+
+    if (this.messages.length > 4) {
+        this.messages.shift ();
+        this.messages.push (message);
+    } else {
+        this.messages.push (message);
+    }
+};
+
+Game.prototype.spendDays = function (amount) {
+    //fun
+    for ( var i = 0; i < amount; ++i) {
+        this.ship.consumeFood();
+    }
+    this.date.setTime(G.date.getTime() + 60 * 60 * 24 * 1000 * amount);
 };
 
 Game.main = function () {

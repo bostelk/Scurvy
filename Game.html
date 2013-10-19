@@ -49,17 +49,31 @@ ___________________________________________________________________
 ||---------------------------------------------------------------||
         </pre>
         <div id="screen"></div>
-        <script>
-            var G = Game.main ();
-            G.start ();
-        </script>
         <div id="controls">
-            <button onclick="G.ship.sail(SailRate.FULL);">Full Sail</button>
-            <button onclick="G.ship.sail(SailRate.HALF);">Half Sail</button>
-            <button onclick="G.ship.wait();">Wait a day</button>
-            <br>
-            <button onclick="G.switchState(GameState.DISCOVERY);">Skip Title</button>
+            <div id="start_voyage">
+                <button onclick="">Buy Food</button>
+                <button onclick="">Sell Food</button>
+                <button onclick="">Buy Crew</button>
+                <button onclick="">Sell Crew</button>
+                <br>
+                <button onclick="">Buy Telescope</button>
+                <button onclick="">Buy Cannon I</button>
+                <button onclick="">Buy Cannon II</button>
+                <button onclick="">Buy Cannon III</button>
+                <br>
+                <button onclick="G.switchState(GameState.VOYAGE);">Bon Voyage!</button>
+            </div>
+            <div id="voyage">
+                <button onclick="G.ship.sail(SailRate.FULL);">Full Sail</button>
+                <button onclick="G.ship.sail(SailRate.HALF);">Half Sail</button>
+                <button onclick="G.ship.wait();">Wait a day</button>
+            </div>
+            <button onclick="G.switchState(GameState.VOYAGE);">Skip Title</button>
             <button onclick="G.ship.displayMorale();">Crew Info</button>
         </div>
     </body>
+    <script>
+        var G = Game.main ();
+        G.start ();
+    </script>
 </html>
