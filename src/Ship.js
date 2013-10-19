@@ -156,14 +156,14 @@ Ship.prototype.fight = function (pirate) {
         if ( member.rank == Crew.RankEnum.Bosun ) {
             this.bosunIsAlive = false;
         }
-        console.log( "we just Lost " + member.name);
+        G.log( "we just Lost " + member.name);
         this.crewMembers.fastRemove (index);
     }
 
     this.health -= pirateDamage;
     pirate.health -= damage;
 
-    console.log ("You: ({0}/{1}) / Pirate:({2}/{3})".format (
+    G.log ("You: ({0}/{1}) / Pirate:({2}/{3})".format (
         this.health, this.maxHealth, pirate.health, pirate.maxHealth
     ));
 

@@ -9,8 +9,8 @@ var Game = function () {
     this._tickId = null;
     this.display = null;
     this.map = null;
-    this.engine = null;
     this.ship = null;
+    this.messages = [];
 };
 
 Game.prototype.init = function() {
@@ -55,6 +55,10 @@ Game.prototype.tick = function () {
     this.draw ();
 };
 
+Game.prototype.log = function (message) {
+    this.messages.push (message);
+};
+
 Game.prototype.draw =function () {
     this.display.clear ();
 
@@ -62,6 +66,11 @@ Game.prototype.draw =function () {
     this.ship.draw ();
     //normal maps go here yo!
     this.display.drawText (0, 1, "Your ship: Bluenose ", 50);
+
+    if (this.messages.length > 0) {
+        var message = this.messages.pop ();
+        this.display.drawText (0, 9, message);
+    }
 
     this.splash.draw ();
 };
