@@ -18,6 +18,8 @@ var Game = function () {
     this.ship = null;
     this.messages = [];
     this.state = GameState.TITLE;
+
+    this.date = null;
 };
 
 Game.prototype.init = function() {
@@ -35,6 +37,9 @@ Game.prototype.init = function() {
 
     this.ship = new Ship (0, 0);
     this.splash = new Splash (0, 0);
+
+    // the adventure starts: day, month, year.
+    this.date = new Date (1700, 9, 1);
 };
 
 Game.prototype.start = function() {
@@ -45,6 +50,9 @@ Game.prototype.start = function() {
 
 Game.prototype.internalTick = function () {
     var now = Date.now ();
+    if (this._lastFrameTime == 0)
+        this._lastFrameTime = now;
+
     this._deltaSeconds = (now - this._lastFrameTime) * this.MILLI_TO_SECONDS;
     this._totalSeconds += this._deltaSeconds;
 
@@ -75,12 +83,16 @@ Game.prototype.tick = function () {
 };
 
 Game.prototype.log = function (message) {
-    console.log (message);
-    this.messages.push (message);
+    console.log (message.toString ());
+    this.messages.push (message.toString ());
 };
 
 Game.prototype.switchState = function (state) {
     this.state = state;
+};
+
+Game.prototype.spendDays = function (amount) {
+    this.date.setTime(G.date.getTime() + 60 * 60 * 24 * 1000 * amount);
 };
 
 Game.prototype.draw =function () {
@@ -88,8 +100,12 @@ Game.prototype.draw =function () {
 
     this.map.draw ();
     this.ship.draw ();
+
     //normal maps go here yo!
+
     this.display.drawText (0, 1, "Your ship: Bluenose ", 50);
+
+    this.display.drawText (0, 2, this.date.toDateString());
 
     if (this.messages.length > 0) {
         var message = this.messages.pop ();

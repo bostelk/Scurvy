@@ -81,6 +81,7 @@ Ship.prototype.getSailEff = function () {
 };
 
 Ship.prototype.wait = function () {
+    G.spendDays (1);
     this.fixShip();
     this.consumeFood();
 };
@@ -102,12 +103,15 @@ Ship.prototype.move = function (x, y) {
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
         G.log (entity);
+        G.spendDays (1);
     } else if (entity instanceof Storm) {
         console.log ("Surprise Storm");
         this.storm();
+        G.spendDays (2);
     } else if (tile == TileType.OPEN_WATER ) {
         console.log ("Smooth sailing");
         this.openWaterUpdate();
+        G.spendDays (1);
     }
 
     this._x = x;
