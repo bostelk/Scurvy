@@ -1,7 +1,6 @@
 var Ship = function(x, y) {
     this.maxHealth = 100;
     this.health = this.maxHealth;
-    this.bosunIsAlive = true;
     this.sailSpeed = SailRate.HALF;
     this.crewMembers = [];
 
@@ -163,11 +162,9 @@ Ship.prototype.fight = function (pirate) {
         //kill off crew member.
         var index = Random.betweeni(0, this.crewMembers.length - 1);
         var member = this.crewMembers[index];
-        if ( member.rank == Crew.RankEnum.Bosun ) {
-            this.bosunIsAlive = false;
-        }
-        G.log( "we just Lost " + member.name);
         this.crewMembers.fastRemove (index);
+
+        G.log("We just lost " + member.name);
     }
 
     this.health -= pirateDamage;
@@ -180,10 +177,7 @@ Ship.prototype.fight = function (pirate) {
 };
 
 Ship.prototype.openWaterUpdate = function() {
-    //check full sail.
-    if ( this.bosunIsAlive === true ) {
-        this.fixShip();
-    }
+    this.fixShip();
 };
 
 Ship.prototype.fixShip = function() {
@@ -229,7 +223,7 @@ Ship.prototype.storm = function() {
         this.health -= 30;
         this.DropMorale(); 
     }
-}
+};
 
 Ship.prototype.dropMorale = function() {
     for( var i = 0; i < this.crewMembers.length; ++i ){
