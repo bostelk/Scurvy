@@ -85,9 +85,10 @@ Ship.prototype.move = function (x, y) {
     var entity = G.map.getEntity (x, y);
 
     if (tile == TileType.PIRATES) {
-        x = x -1;
         console.log ("fight pirates");
-        this.fight (entity);
+        var killed = this.fight (entity);
+        if (!killed)
+            x = x -1;
     } else if (tile == TileType.TREASURE) {
         console.log ("find treasure");
         G.display.drawText(0, 9, "Find 10 coins.", "red");
@@ -145,6 +146,8 @@ Ship.prototype.fight = function (pirate) {
     this.health -= pirate.damage;
     pirate.health -= this.getDamage ();
 
+    // did we kill the pirate?
+    return pirate.health <= 0;
     //Damage ship
     //kill/injure members.
 };
