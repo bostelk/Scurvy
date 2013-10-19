@@ -1,8 +1,8 @@
 var Ship = function(x, y) {
     this.maxHealth = 100;
     this.health = this.maxHealth;
-    this.bosunIsAlive = true;
     this.sailSpeed = SailRate.HALF;
+    this.doubloons = 0;
     this.crewMembers = [];
 
     for( var i = 0; i < Ship.CREW_SIZE; ++i ){
@@ -26,38 +26,6 @@ Ship.prototype.getSpeed = function() { return 100; }
 Ship.prototype.getX = function() { return this._x; }
 Ship.prototype.getY = function() { return this._y; }
 
-Ship.prototype.act = function() {
-    window.addEventListener("keydown", this);
-};
-
-Ship.prototype.handleEvent = function(e) {
-    var code = e.keyCode;
-    if (code == 13 || code == 32) {
-        this._checkBox();
-        return;
-    }
-
-    var keyMap = {};
-    keyMap[38] = 0;
-    keyMap[33] = 1;
-    keyMap[39] = 2;
-    keyMap[34] = 3;
-    keyMap[40] = 4;
-    keyMap[35] = 5;
-    keyMap[37] = 6;
-    keyMap[36] = 7;
-
-    /* one of numpad directions? */
-    if (!(code in keyMap)) { return; }
-
-    /* is there a free space? */
-    var dir = ROT.DIRS[8][keyMap[code]];
-    var newX = this._x + dir[0];
-    var newY = this._y + dir[1];
-
-    this.move (newX, newY);
-};
-
 var SailRate = {
     FULL : 0,
     HALF : 1,
@@ -79,6 +47,7 @@ Ship.prototype.getShipEff = function () {
 }
 
 Ship.prototype.wait = function () {
+    G.spendDays (1);
     this.fixShip();
     this.consumeFood();
 };
@@ -99,13 +68,17 @@ Ship.prototype.move = function (x, y) {
             entity.removeNextUpdate = true;
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
+        this.doubloons += entity.value;
         G.log (entity);
+        G.spendDays (1);
     } else if (entity instanceof Storm) {
         console.log ("Surprise Storm");
         this.storm();
+        G.spendDays (2);
     } else if (tile == TileType.OPEN_WATER ) {
         console.log ("Smooth sailing");
         this.openWaterUpdate();
+        G.spendDays (1);
     }
 
     this._x = x;
@@ -119,6 +92,10 @@ Ship.prototype.move = function (x, y) {
 Ship.prototype.draw = function() {
     G.display.draw(this._x, this._y, "b", "#00ffff");
 }
+
+Ship.prototype.toString = function() {
+    return "Bluenose";
+};
 
 Ship.prototype.displayCrew = function() {
     for ( var i = 0; i < this.crewMembers.length; ++i ) {
@@ -153,32 +130,30 @@ Ship.prototype.fight = function (pirate) {
         //kill off crew member.
         var index = Random.betweeni(0, this.crewMembers.length - 1);
         var member = this.crewMembers[index];
-        if ( member.rank == Crew.RankEnum.Bosun ) {
-            this.bosunIsAlive = false;
-        }
-        G.log( "we just Lost " + member.name);
         this.crewMembers.fastRemove (index);
+
+        G.log("We just lost " + member.name);
     }
 
     this.health -= pirateDamage;
     pirate.health -= damage;
 
-    G.log ("You: ({0}/{1}) / Pirate:({2}/{3})".format (
-        this.health, this.maxHealth, pirate.health, pirate.maxHealth
-    ));
+    G.log ("Cannons hit you for %c{red}{0} damage%c{}.".format (pirateDamage));
 
     // did we kill the pirate?
     return pirate.health <= 0;
 };
 
 Ship.prototype.openWaterUpdate = function() {
-    //check full sail.
-    if ( this.bosunIsAlive === true ) {
-        this.fixShip();
-    }
+    this.fixShip();
 };
 
 Ship.prototype.fixShip = function() {
+    // is there a bosun that can repair?
+    var bosun = this.getMemberOfRank (Crew.RankEnum.Bosun);
+    if (bosun == null)
+        return;
+
     returnedHealth = Random.betweeni(5, 20); 
     var prevHealth = this.health;
     this.health += returnedHealth;
@@ -187,8 +162,20 @@ Ship.prototype.fixShip = function() {
     }
     var difference = this.health - prevHealth;
     if ( difference > 0 ) {
-        G.log("Bosun repaired ship for " + difference);
+        G.log("{0} repaired ship for %c{green}{1}%c{}.".format(
+            bosun.name,
+            difference
+        ));
     }
+};
+
+Ship.prototype.getMemberOfRank = function(rank) {
+    for (var i = 0; i < this.crewMembers.length; i++) {
+        var member = this.crewMembers [i];
+        if (member.rank == rank)
+            return member;
+    }
+    return null;
 };
 
 Ship.prototype.consumeFood = function() {
@@ -204,7 +191,7 @@ Ship.prototype.storm = function() {
         this.health -= 30;
         this.DropMorale(); 
     }
-}
+};
 
 Ship.prototype.dropMorale = function() {
     for( var i = 0; i < this.crewMembers.length; ++i ){
