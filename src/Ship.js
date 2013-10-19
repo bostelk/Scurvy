@@ -3,7 +3,6 @@ var Ship = function(x, y) {
     this.health = this.maxHealth;
     this.sailSpeed = SailRate.HALF;
     this.doubloons = 0;
-    this.visibility = 2;
     this.crewMembers = [];
     this.food = 2000;
 
@@ -246,7 +245,6 @@ Ship.prototype.storm = function() {
     if ( this.sailSpeed == SailRate.FULL ) {
         var damage = 30;
         this.health -= damage;
-        this.DropMorale();
         G.log ("Lightning hits us for %c{red}{0} damage%c{}.".format (damage));
     } else {
         G.log ("Successfully navigated through the storm.");
@@ -261,3 +259,9 @@ Ship.prototype.dropMorale = function() {
     }
 };
 
+Ship.protoType.getVisibily(){
+    if ( this.hasTelescope ) {
+        return 3;
+    }
+    return 2;
+}
