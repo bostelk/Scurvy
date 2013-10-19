@@ -27,10 +27,10 @@ Crew.MoraleEnum = {
 }
 
 Crew.MoraleValues = {
-    0 : "Happy",
-    1 : "Content",
-    2 : "Unhappy",
-    3 : "Mutinous",
+    3 : "Happy",
+    2 : "Content",
+    1 : "Unhappy",
+    0 : "Mutinous",
 }
 
 Crew.RankEnum = {

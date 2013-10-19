@@ -2,7 +2,7 @@ var Ship = function(x, y) {
     this.maxHealth = 100;
     this.health = this.maxHealth;
     this.bosunIsAlive = true;
-
+    this.sailSpeed = Ship.SailRate.HALF;
     this.crewMembers = [];
 
     for( var i = 0; i < Ship.CREW_SIZE; ++i ){
@@ -64,8 +64,8 @@ var SailRate = {
 };
 
 Ship.prototype.sail = function (rate) {
-    var eff = this.getSailEff ();
 
+    var eff = this.getSailEff ();
     this.move (this._x + 1, this._y);
 };
 
@@ -82,7 +82,7 @@ Ship.prototype.getSailEff = function () {
 
 Ship.prototype.wait = function () {
     this.fixShip();
-    this.ConsumeFood();
+    this.consumeFood();
 };
 
 Ship.prototype.move = function (x, y) {
@@ -105,6 +105,9 @@ Ship.prototype.move = function (x, y) {
     } else if (tile == TileType.OPEN_WATER ) {
         console.log ("Smooth sailing");
         this.openWaterUpdate();
+    } else if (tile == TileType.STORM) {
+        console.log ("You Gunna get fucked");
+        this.storm();
     }
 
     this._x = x;
@@ -191,10 +194,26 @@ Ship.prototype.fixShip = function() {
     }
 };
 
-Ship.prototype.ConsumeFood = function() {
+Ship.prototype.consumeFood = function() {
     for ( var i = 0; i < this.crewMembers.length; i++ ) {
         var member = this.crewMembers[i];
         member.hunger -= 1;
         console.log( member.name + " is now " + Crew.HungerValues[member.hunger]);
     }
 };
+
+Ship.prototype.storm = function() {
+    if ( this.sailSpeed = Ship.SailRate.FULL ) {
+        this.health -= 30;
+        this.DropMorale(); 
+    }
+}
+
+Ship.prototype.dropMorale() {
+    for( var i = 0; i < this.crewMembers.length; ++i ){
+        var member = crewMembers[i];
+        member.morale -= 1;
+
+        console.log( member.name + " is now " + Crew.MoraleValues[member.morale]);
+    }
+}
