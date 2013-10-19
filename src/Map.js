@@ -21,8 +21,17 @@ Map.prototype.generate = function (width, height) {
             openfor -= 1;
             // pick a special tile.
             if (openfor == 0) {
-                tile = TileType.PIRATES;
-                entity = new PirateShip ();
+                var roll = Random.betweeni (0, 2);
+                if (roll == 0) {
+                    tile = TileType.PIRATES;
+                    entity = new PirateShip ();
+                } else if (roll == 1) {
+                    tile = TileType.TREASURE;
+                    entity = new Treasure ();
+                } else if (roll == 2) {
+                    tile = TileType.STORM;
+                }
+
                 openfor = Random.betweeni (0, 10);
             }
 
