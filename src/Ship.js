@@ -19,13 +19,6 @@ var Ship = function(x, y) {
 
 Ship.CREW_SIZE = 20;
 
-Ship.DamagedComponents = {
-    Mast = false,
-    Sails = false,
-    Cannons = false,
-    Hull = false,
-};
-
 Ship.prototype.getSpeed = function() { return 100; }
 Ship.prototype.getX = function() { return this._x; }
 Ship.prototype.getY = function() { return this._y; }
