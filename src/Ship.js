@@ -62,8 +62,6 @@ var SailRate = {
 
 Ship.prototype.sail = function (rate) {
     var eff = this.getSailEff ();
-    var water = G.map.getWaterCondition (this._x, this._y);
-
 
     this.move (this._x + 1, this._y);
 };

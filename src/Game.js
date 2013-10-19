@@ -34,7 +34,6 @@ Game.prototype.init = function() {
 Game.prototype.start = function() {
     this._tickId = Browser.requestTick(this.internalTick.bind(this));
 
-    this.engine.start();
     this.draw ();
 };
 

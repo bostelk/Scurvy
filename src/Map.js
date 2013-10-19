@@ -46,10 +46,6 @@ Map.prototype.getTile = function (x, y) {
     return this.tiles [y * this.width + x];
 };
 
-Map.prototype.getWaterCondition = function (x, y) {
-    return WaterCondition.FAIR;
-};
-
 var TileType = {
     OPEN_WATER : ".",
     TREASURE : "?",
