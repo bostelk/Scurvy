@@ -82,7 +82,7 @@ Ship.prototype.move = function (x, y) {
             var captain = this.getMemberOfRank (Crew.RankEnum.Captain);
             var days = Random.betweeni (1, 7);
             G.spendDays (days);
-            G.log ("{0} is seasick, {1} days are lost at sea.".format (
+            G.log ("{0} is seasick; {1} days are lost at sea.".format (
                 captain.name,
                 days
             ));
@@ -141,10 +141,24 @@ Ship.prototype.fight = function (pirate) {
     if (pirateDamage >= this.health) {
         //kill off crew member.
         var index = Random.betweeni(0, this.crewMembers.length - 1);
-        var member = this.crewMembers[index];
         this.crewMembers.fastRemove (index);
+        var killed = this.crewMembers[index];
 
-        G.log("We just lost " + member.name);
+        G.log("We just lost " + killed.name);
+
+        // promote someone to captain.
+        if (killed.rank == Crew.RankEnum.Captain) {
+            var index = Random.betweeni(0, this.crewMembers.length - 1);
+            var promoted = this.crewMembers[index];
+
+            G.log("{0} is promoted from {1} to Captain.".format (
+                promoted.name,
+                promoted.rank
+            ));
+
+            promoted.rank = Crew.RankEnum.Captain;
+            this.crewMembers[index] = promoted;
+        }
     }
 
     this.health -= pirateDamage;
