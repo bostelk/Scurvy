@@ -3,6 +3,7 @@ var Ship = function(x, y) {
     this.health = this.maxHealth;
     this.sailSpeed = SailRate.HALF;
     this.doubloons = 0;
+    this.visibility = 3;
     this.crewMembers = [];
     this.food = 600;
 
