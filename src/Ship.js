@@ -77,7 +77,7 @@ Ship.prototype.move = function (x, y) {
         this.storm();
         G.spendDays (2);
     } else if (tile == TileType.OPEN_WATER ) {
-        console.log ("Smooth sailing");
+        G.log ("Smooth sailing");
         this.openWaterUpdate();
         G.spendDays (1);
     }

@@ -2,6 +2,7 @@ var Treasure = function (x, y) {
     this.x = x;
     this.y = y;
     this.removeNextUpdate = false;
+    this.value = Random.betweeni (10, 5000);
 };
 
 Treasure.prototype.draw = function () {
@@ -11,7 +12,7 @@ Treasure.prototype.draw = function () {
 Treasure.prototype.toString = function () {
     var verb = Treasure.Verbs.random();
     var noun = Treasure.Nouns.random();
-    var value = Random.betweeni (10, 5000) + " doubloons";
+    var value = this.value + " doubloons";
     var result = "{0} {1} worth %c{yellow}{2}%c{}.".format (
         verb,
         noun,

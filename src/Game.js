@@ -56,7 +56,7 @@ Game.prototype.internalTick = function () {
     this._deltaSeconds = (now - this._lastFrameTime) * this.MILLI_TO_SECONDS;
     this._totalSeconds += this._deltaSeconds;
 
-    if (this._totalSeconds > this._lastTickTime + 1) {
+    if (this._totalSeconds >= this._lastTickTime + 1) {
         this._lastTickTime = this._totalSeconds;
         this.tick ();
     }
@@ -83,8 +83,15 @@ Game.prototype.tick = function () {
 };
 
 Game.prototype.log = function (message) {
-    console.log (message.toString ());
-    this.messages.push (message.toString ());
+    message = message.toString ();
+    console.log (message);
+
+    if (this.messages.length > 4) {
+        this.messages.shift ();
+        this.messages.push (message);
+    } else {
+        this.messages.push (message);
+    }
 };
 
 Game.prototype.switchState = function (state) {
@@ -95,7 +102,7 @@ Game.prototype.spendDays = function (amount) {
     this.date.setTime(G.date.getTime() + 60 * 60 * 24 * 1000 * amount);
 };
 
-Game.prototype.draw =function () {
+Game.prototype.draw = function () {
     this.display.clear ();
 
     this.map.draw ();
@@ -116,9 +123,9 @@ Game.prototype.draw =function () {
     var moreinfo = "Booty: {0}".format (this.ship.doubloons);
     this.display.drawText (0, 9, moreinfo);
 
-    if (this.messages.length > 0) {
-        var message = this.messages.pop ();
-        this.display.drawText (0, 7, message);
+    for (var i = 0; i < this.messages.length; i++) {
+        var message = this.messages [this.messages.length - 1- i];
+        this.display.drawText (0, 7 - i, message);
     }
 };
 
