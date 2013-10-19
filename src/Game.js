@@ -75,6 +75,7 @@ Game.prototype.tick = function () {
 };
 
 Game.prototype.log = function (message) {
+    console.log (message);
     this.messages.push (message);
 };
 

@@ -187,7 +187,7 @@ Ship.prototype.fixShip = function() {
     }
     var difference = this.health - prevHealth;
     if ( difference > 0 ) {
-        console.log("Bosun repaired ship for " + difference);
+        G.log("Bosun repaired ship for " + difference);
     }
 };
 
