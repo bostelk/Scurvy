@@ -9,5 +9,26 @@ Treasure.prototype.draw = function () {
 };
 
 Treasure.prototype.toString = function () {
-    return "Found a fistfull of quarters %c{yellow}worth {0} gold%c{}.".format (50);
+    var verb = Treasure.Verbs.random();
+    var noun = Treasure.Nouns.random();
+    var value = Random.betweeni (10, 5000) + " doubloons";
+    var result = "{0} {1} worth %c{yellow}{2}%c{}.".format (
+        verb,
+        noun,
+        value
+    );
+    return result;
 };
+
+Treasure.Verbs = [
+    "Found",
+    "Plundered",
+    "Scavenged",
+];
+
+Treasure.Nouns = [
+    "a fistfull of quarters",
+    "a pirate's booty",
+    "a handfull of diamonds",
+    "a tiny amount of rubies",
+];
