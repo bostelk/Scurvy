@@ -24,7 +24,6 @@ Ship.prototype.getX = function() { return this._x; }
 Ship.prototype.getY = function() { return this._y; }
 
 Ship.prototype.act = function() {
-    G.engine.lock();
     window.addEventListener("keydown", this);
 };
 
@@ -91,7 +90,6 @@ Ship.prototype.move = function (x, y) {
     this._y = y;
 
     window.removeEventListener("keydown", this);
-    G.engine.unlock();
 
     G.draw ();
 }

@@ -11,7 +11,6 @@ var Game = function () {
     this.map = null;
     this.engine = null;
     this.ship = null;
-    this.pedro = null;
 };
 
 Game.prototype.init = function() {
@@ -28,15 +27,8 @@ Game.prototype.init = function() {
     this.map.generate (80, 1);
 
     this.ship = new Ship (0, 0);
-    this.pedro = new Pedro (10, 0);
     this.splash = new Splash (0, 0);
     this.encounter = new MultipleChoiceEncounter (3, 0);
-
-    var scheduler = new ROT.Scheduler.Simple();
-    scheduler.add(this.ship, true);
-    scheduler.add(this.pedro, true);
-
-    this.engine = new ROT.Engine(scheduler);
 };
 
 Game.prototype.start = function() {
@@ -69,7 +61,6 @@ Game.prototype.draw =function () {
     this.display.clear ();
 
     this.map.draw ();
-    this.pedro.draw ();
     this.encounter.draw ();
     this.ship.draw ();
 
