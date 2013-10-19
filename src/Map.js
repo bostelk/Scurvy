@@ -23,13 +23,11 @@ Map.prototype.generate = function (width, height) {
             if (openfor == 0) {
                 var roll = Random.betweeni (0, 2);
                 if (roll == 0) {
-                    tile = TileType.PIRATES;
-                    entity = new PirateShip ();
+                    entity = new PirateShip (x, y);
                 } else if (roll == 1) {
-                    tile = TileType.TREASURE;
-                    entity = new Treasure ();
+                    entity = new Treasure (x, y);
                 } else if (roll == 2) {
-                    tile = TileType.STORM;
+                    //entity = new Storm (x, y);
                 }
 
                 openfor = Random.betweeni (0, 10);
@@ -49,6 +47,17 @@ Map.prototype.draw = function () {
             G.display.draw(x, y, tile, color);
         }
     }
+
+    for (var i = 0; i < this.entities.length; i++) {
+        var entity = this.entities [i];
+        if (entity == null)
+            continue;
+        if (entity.removeNextUpdate) {
+            this.entities.fastRemove (i);
+            continue;
+        }
+        entity.draw ();
+    }
 };
 
 Map.prototype.canMove = function (x, y) {
@@ -67,9 +76,7 @@ Map.prototype.getEntity = function (x, y) {
 
 var TileType = {
     OPEN_WATER : ".",
-    TREASURE : "?",
-    PIRATES : "P",
-    STORM : "@"
+    ROUGH_WATER : ".",
 };
 
 Map.getTileColor = function (tile) {
@@ -78,13 +85,7 @@ Map.getTileColor = function (tile) {
         case TileType.OPEN_WATER:
             color = "white";
         break;
-        case TileType.TREASURE:
-            color = "yellow";
-        break;
-        case TileType.PIRATES:
-            color = "red";
-        break;
-        case TileType.STORM:
+        case TileType.ROUGH_WATER:
             color = "blue";
         break;
         default:

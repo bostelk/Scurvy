@@ -89,12 +89,14 @@ Ship.prototype.move = function (x, y) {
     var tile = G.map.getTile (x, y);
     var entity = G.map.getEntity (x, y);
 
-    if (tile == TileType.PIRATES) {
+    if (entity instanceof PirateShip) {
         console.log ("fight pirates");
         var killed = this.fight (entity);
         if (!killed)
             x = x -1;
-    } else if (tile == TileType.TREASURE) {
+        else
+            entity.removeNextUpdate = true;
+    } else if (entity instanceof Treasure) {
         console.log ("find treasure");
         G.display.drawText(0, 9, "Find 10 coins.", "red");
     }
@@ -134,7 +136,7 @@ Ship.prototype.displayMorale = function() {
 };
 
 Ship.prototype.getDamage = function () {
-    return Random.betweeni (1, 5);
+    return Random.betweeni (10, 20);
 };
 
 Ship.prototype.fight = function (pirate) {
