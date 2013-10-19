@@ -1,10 +1,20 @@
+var ItemType = {
+    Telescope: "Telescope",
+    Cannon_I: "Cannon I",
+    Cannon_II: "Cannon II",
+    Cannon_III: "Cannon III",
+};
+
 var Ship = function(x, y) {
     this.maxHealth = 100;
     this.health = this.maxHealth;
     this.sailSpeed = SailRate.HALF;
-    this.doubloons = 0;
+    this.doubloons = 1000;
+    this.visibility = 3;
     this.crewMembers = [];
     this.food = 2000;
+
+    this.has = {};
 
     for( var i = 0; i < Ship.CREW_SIZE; ++i ){
         this.crewMembers.push(new Crew());
