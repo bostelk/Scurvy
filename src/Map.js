@@ -1,5 +1,5 @@
 var Map = function () {
-    this.characters = [];
+    this.tiles = [];
     this.width = 0;
     this.height = 0;
 };
@@ -8,10 +8,21 @@ Map.prototype.generate = function (width, height) {
     this.width = width;
     this.height = height;
 
+    var openfor = Random.betweeni (0, 10);
+
     for (var y = 0; y < height; y++) {
         for (var x = 0; x < width; x++) {
             var index = y * width + x;
-            this.characters[index] = ".";
+            var tile = TileType.OPEN_WATER;
+
+            openfor -= 1;
+            // pick a special tile.
+            if (openfor == 0) {
+                tile = TileType.TREASURE;
+                openfor = Random.betweeni (0, 10);
+            }
+
+            this.tiles[index] = tile;
         }
     }
 };
@@ -19,7 +30,7 @@ Map.prototype.generate = function (width, height) {
 Map.prototype.draw = function () {
     for (var y = 0; y < this.height; y++) {
         for (var x = 0; x < this.width; x++) {
-            var character = this.characters[y * this.width + x];
+            var character = this.tiles[y * this.width + x];
             G.display.draw(x, y, character);
         }
     }
@@ -31,6 +42,17 @@ Map.prototype.canMove = function (x, y) {
     return inBoundsX && inBoundsY;
 };
 
-Map.prototype.characterAt = function (x, y) {
-    return this.characters [y * this.width + x];
+Map.prototype.getTile = function (x, y) {
+    return this.tiles [y * this.width + x];
+};
+
+Map.prototype.getWaterCondition = function (x, y) {
+    return WaterCondition.FAIR;
+};
+
+var TileType = {
+    OPEN_WATER : ".",
+    TREASURE : "?",
+    PIRATE : "P",
+    STORM : "@"
 };
