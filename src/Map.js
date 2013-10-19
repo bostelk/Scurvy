@@ -18,7 +18,7 @@ Map.prototype.generate = function (width, height) {
             openfor -= 1;
             // pick a special tile.
             if (openfor == 0) {
-                tile = TileType.TREASURE;
+                tile = TileType.PIRATES;
                 openfor = Random.betweeni (0, 10);
             }
 
@@ -49,6 +49,6 @@ Map.prototype.getTile = function (x, y) {
 var TileType = {
     OPEN_WATER : ".",
     TREASURE : "?",
-    PIRATE : "P",
+    PIRATES : "P",
     STORM : "@"
 };
