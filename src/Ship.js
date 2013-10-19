@@ -1,5 +1,5 @@
 var Ship = function(x, y) {
-    this.hitPoints = 100;
+    this.health = 100;
     this.crewMembers = [];
 
     for( var i = 0; i < Ship.CREW_SIZE; ++i ){
@@ -87,6 +87,7 @@ Ship.prototype.move = function (x, y) {
     if (tile == TileType.PIRATES) {
         x = x -1;
         console.log ("fight pirates");
+        this.fight (entity);
     } else if (tile == TileType.TREASURE) {
         console.log ("find treasure");
         G.display.drawText(0, 9, "Find 10 coins.", "red");
@@ -126,25 +127,25 @@ Ship.prototype.displayMorale = function() {
     }
 };
 
-Ship.prototype.fight(var pirate) {
+Ship.prototype.getDamage = function () {
+    return 20;
+};
 
-    if ( pirate.damage > ship.health ) {
+Ship.prototype.fight = function (pirate) {
+    if ( pirate.damage > this.health ) {
+
         //kill off crew member.
-        var killOff = Random.betweeni(0, crewMembers.length);
-        console.log( "we just Lost " + crewMembers(killOff);
+        var killOff = Random.betweeni(0, this.crewMembers.length);
+        var member = this.crewMembers[killOff];
+        console.log( "we just Lost " + member.name);
         this.crewMembers = this.crewMembers.splice(killOff);
+
     }
 
-    this.health - pirate.damage;
-    pirate.health -= 20;
-    return pirate;
+    this.health -= pirate.damage;
+    pirate.health -= this.getDamage ();
+
     //Damage ship
     //kill/injure members.
-}
-
-Ship.prototype.endOfTurnUpdate() = function() {
-
-    for( var i = 0; i < 
-}
-
+};
 
