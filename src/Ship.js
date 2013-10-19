@@ -34,10 +34,15 @@ var SailRate = {
 };
 
 Ship.prototype.sail = function (rate) {
-
+    this.sailSpeed = rate;
     var crewEff = this.getCrewEff ();
     var shipEff = this.getShipEff ();
-    this.move (this._x + 1, this._y);
+    console.log("{0}, {1}".format(this.sailSpeed, SailRate.HALF));
+    if ( this.sailSpeed == SailRate.HALF ){
+        this.move (this._x + 1, this._y);
+    } else {
+        this.move ( this._x + 2, this._y);
+    }
 };
 
 Ship.prototype.getCrewEff = function () {
@@ -176,6 +181,7 @@ Ship.prototype.fight = function (pirate) {
     pirate.health -= damage;
 
     G.log ("Cannons hit us for %c{red}{0} damage%c{}.".format (pirateDamage));
+    G.log ("Your Cannons Fire back for %c{yellow}{0} damage%c{}".format ( damage));
 
     // did we kill the pirate?
     return pirate.health <= 0;
