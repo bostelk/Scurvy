@@ -17,7 +17,7 @@ var Game = function () {
     this.map = null;
     this.ship = null;
     this.messages = [];
-    this.state = GameState.TITLE;
+    this.state = GameState.DISCOVERY;
 
     this.date = null;
 };
