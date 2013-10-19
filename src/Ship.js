@@ -130,7 +130,6 @@ Ship.prototype.displayCrew = function() {
 }
 
 Ship.prototype.displayMorale = function() {
-    //console.log( Crew.RankValues[4]);
     for ( var i = 0; i < this.crewMembers.length; ++i ) {
         var moraleIndex = this.crewMembers[i].morale;
         var moraleValue = Crew.MoraleValues[moraleIndex];
@@ -152,7 +151,7 @@ Ship.prototype.fight = function (pirate) {
     var damage = this.getDamage ();
     var pirateDamage = pirate.getDamage ();
 
-    if (pirateDamage <= this.health) {
+    if (pirateDamage >= this.health) {
         //kill off crew member.
         var index = Random.betweeni(0, this.crewMembers.length - 1);
         var member = this.crewMembers[index];
@@ -216,3 +215,4 @@ Ship.prototype.dropMorale = function() {
         console.log( member.name + " is now " + Crew.MoraleValues[member.morale]);
     }
 };
+
