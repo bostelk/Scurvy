@@ -2,7 +2,7 @@ var Ship = function(x, y) {
     this.maxHealth = 100;
     this.health = this.maxHealth;
     this.bosunIsAlive = true;
-    this.sailSpeed = Ship.SailRate.HALF;
+    this.sailSpeed = SailRate.HALF;
     this.crewMembers = [];
 
     for( var i = 0; i < Ship.CREW_SIZE; ++i ){
@@ -203,17 +203,16 @@ Ship.prototype.consumeFood = function() {
 };
 
 Ship.prototype.storm = function() {
-    if ( this.sailSpeed = Ship.SailRate.FULL ) {
+    if ( this.sailSpeed = SailRate.FULL ) {
         this.health -= 30;
         this.DropMorale(); 
     }
 }
 
-Ship.prototype.dropMorale() {
+Ship.prototype.dropMorale = function() {
     for( var i = 0; i < this.crewMembers.length; ++i ){
         var member = crewMembers[i];
         member.morale -= 1;
-
         console.log( member.name + " is now " + Crew.MoraleValues[member.morale]);
     }
-}
+};
