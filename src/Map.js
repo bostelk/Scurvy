@@ -34,20 +34,6 @@ Map.prototype.generate = function (width, height) {
 };
 
 Map.prototype.draw = function () {
-    for (var y = 0; y < this.height; y++) {
-        for (var x = 0; x < this.width; x++) {
-            var distance = Math.abs (x - G.ship._x);
-            var isVisible = distance < G.ship.visibility;
-            if (isVisible) {
-                var tile = this.tiles[y * this.width + x];
-                var color = Map.getTileColor (tile);
-                G.display.draw(x, y, tile, color);
-            } else {
-                G.display.draw(x, y, "?", "white", "grey");
-            }
-        }
-    }
-
     for (var i = 0; i < this.entities.length; i++) {
         var entity = this.entities [i];
         if (entity == null)
@@ -56,7 +42,24 @@ Map.prototype.draw = function () {
             this.entities.fastRemove (i);
             continue;
         }
-        entity.draw ();
+    }
+
+    for (var y = 0; y < this.height; y++) {
+        for (var x = 0; x < this.width; x++) {
+            var distance = Math.abs (x - G.ship._x);
+            var isVisible = distance < G.ship.visibility;
+            if (isVisible) {
+                var tile = this.tiles[y * this.width + x];
+                var color = Map.getTileColor (tile);
+                G.display.draw(x, y, tile, color);
+
+                var entity = this.entities [y * this.width +x];
+                if (entity != null)
+                    entity.draw();
+            } else {
+                G.display.draw(x, y, "?", "white", "grey");
+            }
+        }
     }
 };
 
