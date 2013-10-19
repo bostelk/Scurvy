@@ -1,5 +1,7 @@
 var Ship = function(x, y) {
-    this.health = 100;
+    this.maxHealth = 100;
+    this.health = this.maxHealth;
+
     this.crewMembers = [];
 
     for( var i = 0; i < Ship.CREW_SIZE; ++i ){
@@ -132,26 +134,28 @@ Ship.prototype.displayMorale = function() {
 };
 
 Ship.prototype.getDamage = function () {
-    return 20;
+    return Random.betweeni (1, 5);
 };
 
 Ship.prototype.fight = function (pirate) {
-    if ( pirate.damage > this.health ) {
+    var damage = this.getDamage ();
+    var pirateDamage = pirate.getDamage ();
 
+    if (pirateDamage <= this.health) {
         //kill off crew member.
         var killOff = Random.betweeni(0, this.crewMembers.length);
         var member = this.crewMembers[killOff];
         console.log( "we just Lost " + member.name);
         this.crewMembers = this.crewMembers.splice(killOff);
-
     }
 
-    this.health -= pirate.damage;
-    pirate.health -= this.getDamage ();
+    this.health -= pirateDamage;
+    pirate.health -= damage;
+
+    console.log ("You: ({0}/{1}) / Pirate:({2}/{3})".format (
+        this.health, this.maxHealth, pirate.health, pirate.maxHealth
+    ));
 
     // did we kill the pirate?
     return pirate.health <= 0;
-    //Damage ship
-    //kill/injure members.
 };
-

@@ -1,6 +1,8 @@
 var PirateShip = function() {
-    this.health = 100;
-    this.damage = 50;
-}
+    this.maxHealth = 100;
+    this.health = this.maxHealth;
+};
 
-
+PirateShip.prototype.getDamage = function () {
+    return Random.betweeni (1, 5);
+};
