@@ -19,6 +19,13 @@ var Ship = function(x, y) {
 
 Ship.CREW_SIZE = 20;
 
+Ship.DamagedComponents = {
+    Mast = false,
+    Sails = false,
+    Cannons = false,
+    Hull = false,
+};
+
 Ship.prototype.getSpeed = function() { return 100; }
 Ship.prototype.getX = function() { return this._x; }
 Ship.prototype.getY = function() { return this._y; }
@@ -26,7 +33,7 @@ Ship.prototype.getY = function() { return this._y; }
 Ship.prototype.act = function() {
     G.engine.lock();
     window.addEventListener("keydown", this);
-}
+};
 
 Ship.prototype.handleEvent = function(e) {
     var code = e.keyCode;
@@ -54,7 +61,7 @@ Ship.prototype.handleEvent = function(e) {
     var newY = this._y + dir[1];
 
     this.move (newX, newY);
-}
+};
 
 var SailRate = {
     FULL : 0,
