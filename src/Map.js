@@ -30,8 +30,9 @@ Map.prototype.generate = function (width, height) {
 Map.prototype.draw = function () {
     for (var y = 0; y < this.height; y++) {
         for (var x = 0; x < this.width; x++) {
-            var character = this.tiles[y * this.width + x];
-            G.display.draw(x, y, character);
+            var tile = this.tiles[y * this.width + x];
+            var color = Map.getTileColor (tile);
+            G.display.draw(x, y, tile, color);
         }
     }
 };
@@ -51,4 +52,25 @@ var TileType = {
     TREASURE : "?",
     PIRATES : "P",
     STORM : "@"
+};
+
+Map.getTileColor = function (tile) {
+    var color;
+    switch (tile) {
+        case TileType.OPEN_WATER:
+            color = "white";
+        break;
+        case TileType.TREASURE:
+            color = "yellow";
+        break;
+        case TileType.PIRATES:
+            color = "red";
+        break;
+        case TileType.STORM:
+            color = "blue";
+        break;
+        default:
+            color = "white";
+    }
+    return color;
 };
