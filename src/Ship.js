@@ -270,7 +270,7 @@ Ship.prototype.dropMorale = function() {
 };
 
 Ship.prototype.getVisibility = function() {
-    if ( this.hasTelescope ) {
+    if ( this.has [ItemType.Telescope] ) {
         return 3;
     }else {
         return 2;

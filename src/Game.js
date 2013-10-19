@@ -60,10 +60,7 @@ Game.prototype.internalTick = function () {
     this._deltaSeconds = (now - this._lastFrameTime) * this.MILLI_TO_SECONDS;
     this._totalSeconds += this._deltaSeconds;
 
-    if (this._totalSeconds >= this._lastTickTime + 1) {
-        this._lastTickTime = this._totalSeconds;
-        this.tick ();
-    }
+    this.tick ();
 
     this._lastFrameTime = now;
     this._tickId = Browser.requestTick(this.internalTick.bind(this));
