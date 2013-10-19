@@ -149,13 +149,13 @@ Ship.prototype.fight = function (pirate) {
 
     if (pirateDamage <= this.health) {
         //kill off crew member.
-        var killOff = Random.betweeni(0, this.crewMembers.length);
-        var member = this.crewMembers[killOff];
+        var index = Random.betweeni(0, this.crewMembers.length - 1);
+        var member = this.crewMembers[index];
         if ( member.rank == Crew.RankEnum.Bosun ) {
             this.bosunIsAlive = false;
         }
         console.log( "we just Lost " + member.name);
-        this.crewMembers = this.crewMembers.splice(killOff);
+        this.crewMembers.fastRemove (index);
     }
 
     this.health -= pirateDamage;
