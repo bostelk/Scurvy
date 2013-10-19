@@ -173,9 +173,7 @@ Ship.prototype.fight = function (pirate) {
     this.health -= pirateDamage;
     pirate.health -= damage;
 
-    G.log ("You: ({0}/{1}) / Pirate:({2}/{3})".format (
-        this.health, this.maxHealth, pirate.health, pirate.maxHealth
-    ));
+    G.log ("Cannons hit you for %c{red}{0} damage%c{}.".format (pirateDamage));
 
     // did we kill the pirate?
     return pirate.health <= 0;
@@ -197,7 +195,7 @@ Ship.prototype.fixShip = function() {
     }
     var difference = this.health - prevHealth;
     if ( difference > 0 ) {
-        G.log("Bosun repaired ship for " + difference);
+        G.log("Bosun repaired ship for %c{green}{0}%c{}.".format(difference));
     }
 };
 

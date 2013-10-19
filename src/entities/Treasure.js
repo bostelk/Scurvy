@@ -9,5 +9,5 @@ Treasure.prototype.draw = function () {
 };
 
 Treasure.prototype.toString = function () {
-    return "A fistfull of quarters (40 points)";
+    return "Found a fistfull of quarters %c{yellow}worth {0} gold%c{}.".format (50);
 };

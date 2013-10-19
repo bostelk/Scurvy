@@ -111,11 +111,11 @@ Game.prototype.draw =function () {
         Ship.CREW_SIZE,
         this.date.toDateString()
     );
-    this.display.drawText (0, 1, info);
+    this.display.drawText (0, 9, info);
 
     if (this.messages.length > 0) {
         var message = this.messages.pop ();
-        this.display.drawText (0, 9, message);
+        this.display.drawText (0, 8, message);
     }
 };
 
