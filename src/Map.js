@@ -27,7 +27,7 @@ Map.prototype.generate = function (width, height) {
                 } else if (roll == 1) {
                     entity = new Treasure (x, y);
                 } else if (roll == 2) {
-                    //entity = new Storm (x, y);
+                    entity = new Storm (x, y);
                 }
 
                 openfor = Random.betweeni (0, 10);
