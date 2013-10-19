@@ -187,6 +187,11 @@ Ship.prototype.openWaterUpdate = function() {
 };
 
 Ship.prototype.fixShip = function() {
+    // is there a bosun that can repair?
+    var bosun = this.getMemberOfRank (Crew.RankEnum.Bosun);
+    if (bosun == null)
+        return;
+
     returnedHealth = Random.betweeni(5, 20); 
     var prevHealth = this.health;
     this.health += returnedHealth;
@@ -195,8 +200,20 @@ Ship.prototype.fixShip = function() {
     }
     var difference = this.health - prevHealth;
     if ( difference > 0 ) {
-        G.log("Bosun repaired ship for %c{green}{0}%c{}.".format(difference));
+        G.log("{0} repaired ship for %c{green}{1}%c{}.".format(
+            bosun.name,
+            difference
+        ));
     }
+};
+
+Ship.prototype.getMemberOfRank = function(rank) {
+    for (var i = 0; i < this.crewMembers.length; i++) {
+        var member = this.crewMembers [i];
+        if (member.rank == rank)
+            return member;
+    }
+    return null;
 };
 
 Ship.prototype.consumeFood = function() {
