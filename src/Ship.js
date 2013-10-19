@@ -82,7 +82,7 @@ Ship.prototype.move = function (x, y) {
             var captain = this.getMemberOfRank (Crew.RankEnum.Captain);
             var days = Random.betweeni (1, 7);
             G.spendDays (days);
-            G.log ("{0} is seasick; {1} days are lost at sea.".format (
+            G.log ("{0} is seasick; %c{red}{1} days%c{} are lost at sea.".format (
                 captain.name,
                 days
             ));
