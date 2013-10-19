@@ -1,4 +1,7 @@
 var Ship = function(x, y) {
+    var CREW_SIZE = 20;
+    //var crewMembers = [];
+    //for( int i = 0; i < CREW_SIZE; i = crewMembers.push(new crew() );
     this._x = x;
     this._y = y;
 }
