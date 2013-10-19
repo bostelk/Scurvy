@@ -70,10 +70,12 @@ Ship.prototype.move = function (x, y) {
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
         this.doubloons += entity.value;
+        entity.removeNextUpdate = true;
         G.log (entity);
         G.spendDays (1);
     } else if (entity instanceof Storm) {
         console.log ("Surprise Storm");
+        entity.removeNextUpdate = true;
         this.storm();
         G.spendDays (2);
     } else if (tile == TileType.OPEN_WATER ) {
