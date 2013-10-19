@@ -17,3 +17,7 @@ Random.betweeni = function (min, max) {
 Random.fiftyfifty = function () {
     return Random.next() >= 0.5;
 };
+
+Random.next = function () {
+    return Math.random();
+};

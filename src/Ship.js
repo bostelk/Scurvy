@@ -77,9 +77,22 @@ Ship.prototype.move = function (x, y) {
         this.storm();
         G.spendDays (2);
     } else if (tile == TileType.OPEN_WATER ) {
-        G.log ("Smooth sailing.");
-        this.openWaterUpdate();
-        G.spendDays (1);
+        var roll = Random.next();
+        if (roll < 0.05) {
+            var captain = this.getMemberOfRank (Crew.RankEnum.Captain);
+            var days = Random.betweeni (1, 7);
+            G.spendDays (days);
+            G.log ("{0} is seasick, {1} days are lost at sea.".format (
+                captain.name,
+                days
+            ));
+            x = x -1;
+            return;
+        } else {
+            G.log ("Smooth sailing.");
+            this.openWaterUpdate();
+            G.spendDays (1);
+        }
     }
 
     this._x = x;
