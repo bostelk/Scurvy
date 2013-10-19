@@ -269,7 +269,7 @@ Ship.prototype.dropMorale = function() {
     }
 };
 
-Ship.protoType.getVisibily(){
+Ship.prototype.getVisibily = function(){
     if ( this.hasTelescope ) {
         return 3;
     }
