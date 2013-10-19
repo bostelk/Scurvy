@@ -70,22 +70,35 @@ Ship.prototype.move = function (x, y) {
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
         this.doubloons += entity.value;
+        entity.removeNextUpdate = true;
         G.log (entity);
         G.spendDays (1);
     } else if (entity instanceof Storm) {
         console.log ("Surprise Storm");
+        entity.removeNextUpdate = true;
         this.storm();
         G.spendDays (2);
     } else if (tile == TileType.OPEN_WATER ) {
-        console.log ("Smooth sailing");
-        this.openWaterUpdate();
-        G.spendDays (1);
+        var roll = Random.next();
+        if (roll < 0.05) {
+            var captain = this.getMemberOfRank (Crew.RankEnum.Captain);
+            var days = Random.betweeni (1, 7);
+            G.spendDays (days);
+            G.log ("{0} is seasick; %c{red}{1} days%c{} are lost at sea.".format (
+                captain.name,
+                days
+            ));
+            x = x -1;
+            return;
+        } else {
+            G.log ("Smooth sailing.");
+            this.openWaterUpdate();
+            G.spendDays (1);
+        }
     }
 
     this._x = x;
     this._y = y;
-
-    window.removeEventListener("keydown", this);
 
     G.draw ();
 }
@@ -130,16 +143,30 @@ Ship.prototype.fight = function (pirate) {
     if (pirateDamage >= this.health) {
         //kill off crew member.
         var index = Random.betweeni(0, this.crewMembers.length - 1);
-        var member = this.crewMembers[index];
         this.crewMembers.fastRemove (index);
+        var killed = this.crewMembers[index];
 
-        G.log("We just lost " + member.name);
+        G.log("We just lost " + killed.name);
+
+        // promote someone to captain.
+        if (killed.rank == Crew.RankEnum.Captain) {
+            var index = Random.betweeni(0, this.crewMembers.length - 1);
+            var promoted = this.crewMembers[index];
+
+            G.log("{0} is promoted from {1} to Captain.".format (
+                promoted.name,
+                promoted.rank
+            ));
+
+            promoted.rank = Crew.RankEnum.Captain;
+            this.crewMembers[index] = promoted;
+        }
     }
 
     this.health -= pirateDamage;
     pirate.health -= damage;
 
-    G.log ("Cannons hit you for %c{red}{0} damage%c{}.".format (pirateDamage));
+    G.log ("Cannons hit us for %c{red}{0} damage%c{}.".format (pirateDamage));
 
     // did we kill the pirate?
     return pirate.health <= 0;
@@ -194,8 +221,12 @@ Ship.prototype.consumeFood = function() {
 
 Ship.prototype.storm = function() {
     if ( this.sailSpeed == SailRate.FULL ) {
-        this.health -= 30;
-        this.DropMorale(); 
+        var damage = 30;
+        this.health -= damage;
+        this.DropMorale();
+        G.log ("Lightning hits us for %c{red}{0} damage%c{}.".format (damage));
+    } else {
+        G.log ("Successfully navigated through the storm.");
     }
 };
 
