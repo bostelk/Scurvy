@@ -100,6 +100,9 @@ Game.prototype.switchState = function (state) {
 
 Game.prototype.spendDays = function (amount) {
     //fun
+    for ( var i = 0; i < amount; ++i) {
+        this.ship.consumeFood();
+    }
     this.date.setTime(G.date.getTime() + 60 * 60 * 24 * 1000 * amount);
 };
 

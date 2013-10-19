@@ -5,7 +5,7 @@ var Ship = function(x, y) {
     this.doubloons = 0;
     this.visibility = 3;
     this.crewMembers = [];
-    this.food = 600;
+    this.food = 2000;
 
     for( var i = 0; i < Ship.CREW_SIZE; ++i ){
         this.crewMembers.push(new Crew());
@@ -41,7 +41,13 @@ Ship.prototype.sail = function (rate) {
 };
 
 Ship.prototype.getCrewEff = function () {
-    return this.crewMembers.length / Ship.CREW_SIZE;
+    var activeCrew = this.crewMembers.length;
+    for ( var i = 0; i < this.crewMembers.length; i++ ) {
+        if ( this.crewMembers[i].morale == Crew.MoraleEnum.Mutinous ) {
+         activeCrew--;
+        }
+    }
+    return activeCrew / Ship.CREW_SIZE;
 };
 
 Ship.prototype.getShipEff = function () {
@@ -51,7 +57,6 @@ Ship.prototype.getShipEff = function () {
 Ship.prototype.wait = function () {
     G.spendDays (1);
     this.fixShip();
-    this.consumeFood();
 };
 
 Ship.prototype.move = function (x, y) {
@@ -150,6 +155,7 @@ Ship.prototype.fight = function (pirate) {
         G.log("We just lost " + killed.name);
 
         // promote someone to captain.
+        // I like how some random gets to become captain.
         if (killed.rank == Crew.RankEnum.Captain) {
             var index = Random.betweeni(0, this.crewMembers.length - 1);
             var promoted = this.crewMembers[index];
@@ -163,7 +169,9 @@ Ship.prototype.fight = function (pirate) {
             this.crewMembers[index] = promoted;
         }
     }
-
+    //Maybe factor in crew morale.
+    //var crewEff = getCrewEff();
+    // maybe ship effectiveness reduces damage.
     this.health -= pirateDamage;
     pirate.health -= damage;
 
@@ -174,6 +182,11 @@ Ship.prototype.fight = function (pirate) {
 };
 
 Ship.prototype.openWaterUpdate = function() {
+    /*
+    if ( getCrewEff < 0.3f ) {
+        //TODO don't move.
+    }
+    */
     this.fixShip();
 };
 
@@ -183,7 +196,7 @@ Ship.prototype.fixShip = function() {
     if (bosun == null)
         return;
 
-    returnedHealth = Random.betweeni(5, 20); 
+    returnedHealth = Random.betweeni(5, 20);
     var prevHealth = this.health;
     this.health += returnedHealth;
     if ( this.health > this.maxHealth ) {
