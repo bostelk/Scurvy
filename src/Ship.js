@@ -210,11 +210,14 @@ Ship.prototype.getMemberOfRank = function(rank) {
 Ship.prototype.consumeFood = function() {
     for ( var i = 0; i < this.crewMembers.length; i++ ) {
         var member = this.crewMembers[i];
-        console.log("{0}, {1}".format( member.hunger, Crew.Hunger));
-        if ( (member.hunger <= Crew.HungerValues.Hungry) && (this.food > 0)) {
+        if ( (member.hunger <= Crew.HungerEnum.Hungry ) && this.food > 0 ) {
             this.food -= 1;
-        } else {
-            member.hunger -= 1;
+        }
+        else {
+            member.hunger -= (member.hunger == Crew.HungerEnum.Starving) ? 0 : 1;
+            if (member.hunger == Crew.HungerEnum.Starving) {
+                member.morale -= (member.morale == Crew.MoralEnum.Mutinous) ? 0 : 1;
+            }
         }
         console.log( member.name + " is now " + Crew.HungerValues[member.hunger]);
     }
