@@ -111,11 +111,14 @@ Game.prototype.draw =function () {
         Ship.CREW_SIZE,
         this.date.toDateString()
     );
-    this.display.drawText (0, 9, info);
+    this.display.drawText (0, 8, info);
+
+    var moreinfo = "Booty: {0}".format (this.ship.doubloons);
+    this.display.drawText (0, 9, moreinfo);
 
     if (this.messages.length > 0) {
         var message = this.messages.pop ();
-        this.display.drawText (0, 8, message);
+        this.display.drawText (0, 7, message);
     }
 };
 

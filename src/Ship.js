@@ -2,6 +2,7 @@ var Ship = function(x, y) {
     this.maxHealth = 100;
     this.health = this.maxHealth;
     this.sailSpeed = SailRate.HALF;
+    this.doubloons = 0;
     this.crewMembers = [];
 
     for( var i = 0; i < Ship.CREW_SIZE; ++i ){
@@ -68,6 +69,7 @@ Ship.prototype.move = function (x, y) {
             entity.removeNextUpdate = true;
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
+        this.doubloons += entity.value;
         G.log (entity);
         G.spendDays (1);
     } else if (entity instanceof Storm) {
