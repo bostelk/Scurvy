@@ -1,9 +1,11 @@
 var Map = function () {
     this.tiles = [];
     this.entities = [];
+    this.days = 80;
 
     this.width = 0;
     this.height = 0;
+    this.distance = 1000;
 };
 
 Map.prototype.generate = function (width, height) {
@@ -15,12 +17,13 @@ Map.prototype.generate = function (width, height) {
             var index = y * width + x;
             var tile = TileType.OPEN_WATER;
             var entity = null;
-
-            if (x == 1) {
+            rand = Random.betweeni(1, 3);
+            //rand = x;
+            if (rand == 1) {
                 entity = new PirateShip (x, y);
-            } else if (x == 2) {
+            } else if (rand == 2) {
                 entity = new Treasure (x, y);
-            } else if (x == 3) {
+            } else if (rand == 3) {
                 entity = new Storm (x, y);
             }
 
@@ -84,3 +87,10 @@ Map.getTileColor = function (tile) {
     }
     return color;
 };
+
+Map.shift = function () {
+    for ( var i = 0; i < this.entities.length; ++i) {
+        entities[i].x -= 1;
+        days -= 1;
+    }
+}

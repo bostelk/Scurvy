@@ -65,20 +65,18 @@ var SailRate = {
 
 Ship.prototype.sail = function (rate) {
 
-    var eff = this.getSailEff ();
+    var crewEff = this.getCrewEff ();
+    var shipEff = this.getShipEff ();
     this.move (this._x + 1, this._y);
 };
 
-Ship.prototype.getSailEff = function () {
-    var members = this.crewMembers;
-    var score = 0;
-
-    for (var i = 0; i < members.length; i++) {
-        score += 5;
-    }
-
-    return score / Ship.CREW_SIZE * 5;
+Ship.prototype.getCrewEff = function () {
+    return this.crewMembers.length / Ship.CREW_SIZE;
 };
+
+Ship.prototype.getShipEff = function () {
+    return this.health/this.maxHealth;
+}
 
 Ship.prototype.wait = function () {
     this.fixShip();
