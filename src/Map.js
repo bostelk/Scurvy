@@ -1,5 +1,7 @@
 var Map = function () {
     this.tiles = [];
+    this.entities = [];
+
     this.width = 0;
     this.height = 0;
 };
@@ -14,15 +16,18 @@ Map.prototype.generate = function (width, height) {
         for (var x = 0; x < width; x++) {
             var index = y * width + x;
             var tile = TileType.OPEN_WATER;
+            var entity = null;
 
             openfor -= 1;
             // pick a special tile.
             if (openfor == 0) {
                 tile = TileType.PIRATES;
+                entity = new PirateShip ();
                 openfor = Random.betweeni (0, 10);
             }
 
             this.tiles[index] = tile;
+            this.entities[index] = entity;
         }
     }
 };
@@ -45,6 +50,10 @@ Map.prototype.canMove = function (x, y) {
 
 Map.prototype.getTile = function (x, y) {
     return this.tiles [y * this.width + x];
+};
+
+Map.prototype.getEntity = function (x, y) {
+    return this.entity [y * this.width + x];
 };
 
 var TileType = {

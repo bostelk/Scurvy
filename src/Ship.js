@@ -82,6 +82,8 @@ Ship.prototype.move = function (x, y) {
         return;
 
     var tile = G.map.getTile (x, y);
+    var entity = G.map.getEntity (x, y);
+
     if (tile == TileType.PIRATES) {
         x = x -1;
         console.log ("fight pirates");
