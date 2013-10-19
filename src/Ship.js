@@ -56,8 +56,28 @@ Ship.prototype.handleEvent = function(e) {
     this.move (newX, newY);
 }
 
-Ship.prototype.onwards = function () {
+var SailRate = {
+    FULL : 0,
+    HALF : 1,
+};
+
+Ship.prototype.sail = function (rate) {
+    var eff = this.getSailEff ();
+    var water = G.map.getWaterCondition (this._x, this._y);
+
+
     this.move (this._x + 1, this._y);
+};
+
+Ship.prototype.getSailEff = function () {
+    var members = this.crewMembers;
+    var score = 0;
+
+    for (var i = 0; i < members.length; i++) {
+        score += 5;
+    }
+
+    return score / Ship.CREW_SIZE * 5;
 };
 
 Ship.prototype.move = function (x, y) {

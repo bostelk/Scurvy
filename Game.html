@@ -24,7 +24,9 @@
             G.start ();
         </script>
         <div id="controls">
-            <button onclick="G.ship.onwards();">Onwards!</button>
+            <button onclick="G.ship.sail(SailRate.FULL);">Full Sail</button>
+            <button onclick="G.ship.sail(SailRate.HALF);">Half Sail</button>
+            <br>
             <button onclick="G.ship.displayMorale();">Crew Info</button>
             <button onclick="alert('hello');">Go fishing</button>
         </div>
