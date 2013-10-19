@@ -171,7 +171,7 @@ Ship.prototype.fight = function (pirate) {
 
 Ship.prototype.openWaterUpdate = function() {
     //check full sail.
-    if ( this.bosunIsAlive == true ) {
+    if ( this.bosunIsAlive === true ) {
         this.fixShip();
     }
 };
@@ -179,13 +179,12 @@ Ship.prototype.openWaterUpdate = function() {
 Ship.prototype.fixShip = function() {
     returnedHealth = Random.betweeni(5, 20); 
     var prevHealth = this.health;
-    if ( this.health > Ship.maxHealth ) {
-        this.health = Ship.maxHealth;
+    this.health += returnedHealth;
+    if ( this.health > this.maxHealth ) {
+        this.health = this.maxHealth;
     }
     var difference = this.health - prevHealth;
     if ( difference > 0 ) {
         console.log("Bosun repaired ship for " + difference);
     }
 };
-
-
