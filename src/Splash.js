@@ -9,10 +9,12 @@ var Splash = function(x, y) {
         "-------------By:" + tempName + "-------------------",
         "--------------------0000000000000---------------",
     ];
+    this.finised = false;
 }
 
 Splash.prototype.tick = function() {
     this._y += 1;
+    this.finished = this._y >= 10;
 };
 
 Splash.prototype.draw = function() {
