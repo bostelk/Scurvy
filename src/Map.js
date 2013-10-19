@@ -10,27 +10,18 @@ Map.prototype.generate = function (width, height) {
     this.width = width;
     this.height = height;
 
-    var openfor = Random.betweeni (0, 10);
-
     for (var y = 0; y < height; y++) {
         for (var x = 0; x < width; x++) {
             var index = y * width + x;
             var tile = TileType.OPEN_WATER;
             var entity = null;
 
-            openfor -= 1;
-            // pick a special tile.
-            if (openfor == 0) {
-                var roll = Random.betweeni (0, 2);
-                if (roll == 0) {
-                    entity = new PirateShip (x, y);
-                } else if (roll == 1) {
-                    entity = new Treasure (x, y);
-                } else if (roll == 2) {
-                    entity = new Storm (x, y);
-                }
-
-                openfor = Random.betweeni (0, 10);
+            if (x == 1) {
+                entity = new PirateShip (x, y);
+            } else if (x == 2) {
+                entity = new Treasure (x, y);
+            } else if (x == 3) {
+                entity = new Storm (x, y);
             }
 
             this.tiles[index] = tile;
