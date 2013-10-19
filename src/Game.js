@@ -30,6 +30,7 @@ Game.prototype.init = function() {
     this.ship = new Ship (0, 0);
     this.pedro = new Pedro (10, 0);
     this.splash = new Splash (0, 0);
+    this.encounter = new MultipleChoiceEncounter (3, 0);
 
     var scheduler = new ROT.Scheduler.Simple();
     scheduler.add(this.ship, true);
@@ -68,8 +69,9 @@ Game.prototype.draw =function () {
     this.display.clear ();
 
     this.map.draw ();
-    this.ship.draw ();
     this.pedro.draw ();
+    this.encounter.draw ();
+    this.ship.draw ();
 
     this.display.drawText (0, 1, "Your ship: Bluenose ", 50);
 

@@ -30,3 +30,7 @@ Map.prototype.canMove = function (x, y) {
     var inBoundsY = (y >= 0 && y < this.height);
     return inBoundsX && inBoundsY;
 };
+
+Map.prototype.characterAt = function (x, y) {
+    return this.characters [y * this.width + x];
+};

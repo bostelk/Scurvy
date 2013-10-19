@@ -47,6 +47,9 @@ Ship.prototype.onwards = function () {
 Ship.prototype.move = function (x, y) {
     if (!G.map.canMove (x, y))
         return;
+    if (x == 3) {
+        G.encounter.encountered = true;
+    }
 
     this._x = x;
     this._y = y;
