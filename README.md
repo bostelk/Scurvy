@@ -1,2 +1,4 @@
 Scurvy
 ======
+
+Halifax Game Jam
