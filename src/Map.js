@@ -62,7 +62,7 @@ Map.prototype.getTile = function (x, y) {
 };
 
 Map.prototype.getEntity = function (x, y) {
-    return this.entity [y * this.width + x];
+    return this.entities [y * this.width + x];
 };
 
 var TileType = {
