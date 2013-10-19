@@ -1,3 +1,9 @@
+var GameState = {
+    TITLE: 0,
+    DISCOVERY: 1,
+    FINISHED: 2
+};
+
 var Game = function () {
     this.MILLI_TO_SECONDS = 1 / 1000;
 
@@ -11,6 +17,7 @@ var Game = function () {
     this.map = null;
     this.ship = null;
     this.messages = [];
+    this.state = GameState.TITLE;
 };
 
 Game.prototype.init = function() {
@@ -51,12 +58,28 @@ Game.prototype.internalTick = function () {
 };
 
 Game.prototype.tick = function () {
-    this.splash.tick ();
-    this.draw ();
+    switch (this.state) {
+        case GameState.TITLE:
+            this.display.clear ();
+            this.splash.tick ();
+            this.splash.draw ();
+            if (this.splash.finished)
+                this.switchState (GameState.DISCOVERY);
+            break;
+        case GameState.DISCOVERY:
+            this.draw ();
+            break;
+        case GameState.FINISHED:
+            break;
+    }
 };
 
 Game.prototype.log = function (message) {
     this.messages.push (message);
+};
+
+Game.prototype.switchState = function (state) {
+    this.state = state;
 };
 
 Game.prototype.draw =function () {
@@ -71,8 +94,6 @@ Game.prototype.draw =function () {
         var message = this.messages.pop ();
         this.display.drawText (0, 9, message);
     }
-
-    this.splash.draw ();
 };
 
 Game.main = function () {
