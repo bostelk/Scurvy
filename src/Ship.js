@@ -77,6 +77,9 @@ Ship.prototype.getSailEff = function () {
     return score / Ship.CREW_SIZE * 5;
 };
 
+Ship.prototype.wait = function () {
+};
+
 Ship.prototype.move = function (x, y) {
     if (!G.map.canMove (x, y))
         return;
