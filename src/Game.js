@@ -217,7 +217,7 @@ Game.prototype.hireCrew = function () {
         G.log ("Recruited %c{orange}{0}%c{} as %c{purple}{1}%c{} for %c{yellow}{2}%c{}.".format (
             member.name,
             Crew.RankValues[member.rank],
-            value
+            cost
         ));
         this.ship.crewMembers.push (member);
     } else {
