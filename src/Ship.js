@@ -101,7 +101,7 @@ Ship.prototype.move = function (x, y) {
             entity.removeNextUpdate = true;
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
-        G.display.drawText(0, 9, "Find 10 coins.", "red");
+        G.log (entity);
     } else if (entity instanceof Storm) {
         console.log ("Surprise Storm");
         this.storm();
