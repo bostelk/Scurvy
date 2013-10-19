@@ -269,9 +269,29 @@ Ship.prototype.dropMorale = function() {
     }
 };
 
-Ship.prototype.getVisibily = function(){
+Ship.prototype.getVisibility = function() {
     if ( this.hasTelescope ) {
         return 3;
+    }else {
+        return 2;
     }
-    return 2;
-}
+};
+
+Ship.prototype.getShipDamageString = function() {
+    var key = Math.floor(this.damage / 10);
+    return ShipDamageDescriptors[key];
+};
+
+ShipDamageDescriptors  = {
+    0 : "Actively Sinking",
+    1 : "Maybe not",
+    2 : "There was a fire it's out now",
+    3 : "At least the crews ok?",
+    4 : "The f'csle is flooded",
+    5 : "Repairs required",
+    6 : "She's seen better days",
+    7 : "Couple of scratches",
+    8 : "Sails are damaged",
+    9 : "Looking great",
+    10: "Never Been Better"
+};

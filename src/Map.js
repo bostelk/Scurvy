@@ -47,7 +47,7 @@ Map.prototype.draw = function () {
     for (var y = 0; y < this.height; y++) {
         for (var x = 0; x < this.width; x++) {
             var distance = Math.abs (x - G.ship._x);
-            var isVisible = distance < G.ship.getVisibility;
+            var isVisible = distance < G.ship.getVisibility();
             if (isVisible) {
                 var tile = this.tiles[y * this.width + x];
                 var color = Map.getTileColor (tile);

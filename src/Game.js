@@ -120,7 +120,8 @@ Game.prototype.drawStatus = function () {
         this.ship.maxHealth,
         this.ship.crewMembers.length,
         Ship.CREW_SIZE,
-        this.date.toDateString()
+        this.date.toDateString(),
+        //this.ship.getShipDamageString()
     );
     this.display.drawText (0, 8, info);
 
