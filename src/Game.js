@@ -103,9 +103,15 @@ Game.prototype.draw =function () {
 
     //normal maps go here yo!
 
-    this.display.drawText (0, 1, "Your ship: Bluenose ", 50);
-
-    this.display.drawText (0, 2, this.date.toDateString());
+    var info = "Ship:{0}   Hp:{1}/{2}   Crew:{3}/{4}   Date:{5}".format (
+        this.ship,
+        this.ship.health,
+        this.ship.maxHealth,
+        this.ship.crewMembers.length,
+        Ship.CREW_SIZE,
+        this.date.toDateString()
+    );
+    this.display.drawText (0, 1, info);
 
     if (this.messages.length > 0) {
         var message = this.messages.pop ();

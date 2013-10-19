@@ -126,6 +126,10 @@ Ship.prototype.draw = function() {
     G.display.draw(this._x, this._y, "b", "#00ffff");
 }
 
+Ship.prototype.toString = function() {
+    return "Bluenose";
+};
+
 Ship.prototype.displayCrew = function() {
     for ( var i = 0; i < this.crewMembers.length; ++i ) {
         var name = this.crewMembers[i].name;
