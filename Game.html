@@ -51,15 +51,15 @@ ___________________________________________________________________
         <div id="screen"></div>
         <div id="controls">
             <div id="start_voyage">
-                <button onclick="">Buy Food</button>
-                <button onclick="">Sell Food</button>
-                <button onclick="">Buy Crew</button>
-                <button onclick="">Sell Crew</button>
+                <button onclick="G.buyFood (100)">Buy Food (100)</button>
+                <button onclick="G.sellFood (100)">Sell Food (100)</button>
+                <button onclick="G.hireCrew ()">Hire Crew</button>
+                <button onclick="G.fireCrew ()">Fire Crew</button>
                 <br>
-                <button onclick="">Buy Telescope</button>
-                <button onclick="">Buy Cannon I</button>
-                <button onclick="">Buy Cannon II</button>
-                <button onclick="">Buy Cannon III</button>
+                <button onclick="G.buyItem(ItemType.Telescope);">Buy Telescope</button>
+                <button onclick="G.buyItem(ItemType.Cannon_I);">Buy Cannon I</button>
+                <button onclick="G.buyItem(ItemType.Cannon_II);">Buy Cannon II</button>
+                <button onclick="G.buyItem(ItemType.Cannon_III);">Buy Cannon III</button>
                 <br>
                 <button onclick="G.switchState(GameState.VOYAGE);">Bon Voyage!</button>
             </div>

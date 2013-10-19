@@ -5,6 +5,10 @@ var Crew = function() {
     this.rank = Crew.RankEnum.DeckHand;
 }
 
+Crew.prototype.getValue = function() {
+    return 100;
+};
+
 Crew.HungerEnum = {
     Starving : 0,
     Hungry : 1,

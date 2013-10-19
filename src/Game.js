@@ -96,6 +96,7 @@ Game.prototype.draw = function () {
             this.splash.draw ();
             break;
         case GameState.START_VOYAGE:
+            this.display.clear ();
             this.drawStatus();
             break;
         case GameState.VOYAGE:
@@ -142,6 +143,7 @@ Game.prototype.enterState = function (state) {
             document.getElementById("voyage").style.display = "none";
             break;
         case GameState.VOYAGE:
+            this.display.clear();
             document.getElementById("start_voyage").style.display = "none";
             document.getElementById("voyage").style.display = "block";
             break;
@@ -183,6 +185,68 @@ Game.prototype.log = function (message) {
         this.messages.push (message);
     } else {
         this.messages.push (message);
+    }
+};
+
+Game.prototype.buyFood = function (amount) {
+    var cost = amount * 1;
+    if (this.ship.doubloons - cost >= 0) {
+        this.ship.doubloons -= cost;
+        this.ship.food += amount;
+        G.log ("Bought %c{green}{0} bushels%c{} of food for {0} %c{yellow}doubloons%c{}.".format(amount, cost));
+    } else {
+        G.log ("%c{red}We're broke dog.%c{}".format(amount));
+    }
+};
+
+Game.prototype.sellFood = function (amount) {
+    var value = amount * 0.9;
+    if (this.ship.food - amount >= 0) {
+        this.ship.food -= amount;
+        this.ship.doubloons += value;
+        G.log ("Sold %c{green}{0} bushels%c{} of food for %c{yellow}{1} doubloons%c{}.".format(amount, value));
+    } else {
+        G.log ("%c{red}There's nothing left!%c{}".format(amount));
+    }
+};
+
+Game.prototype.hireCrew = function () {
+    var cost = 100;
+    if (this.ship.doubloons - cost >= 0 && this.ship.crewMembers.length < Ship.CREW_SIZE) {
+        var member = new Crew();
+        this.ship.doubloons -= cost;
+        G.log ("Recruited %c{orange}{0}%c{} as %c{purple}{1}%c{} for %c{yellow}{2}%c{}.".format (
+            member.name,
+            Crew.RankValues[member.rank],
+            cost
+        ));
+        this.ship.crewMembers.push (member);
+    } else {
+        G.log ("%c{red}We're full!%c{}");
+    }
+};
+
+Game.prototype.fireCrew = function () {
+    if (this.ship.crewMembers.length > 6) {
+        var member = this.ship.crewMembers.pop ();
+        //var value = member.getValue () * 0.9;
+        //this.ship.doubloons += value;
+        G.log ("Fired %c{orange}{0}%c{}.".format (member.name));
+    } else {
+        G.log ("The elite six stick around.");
+    }
+};
+
+Game.prototype.buyItem = function (type) {
+    var cost = 100;
+    if (type in this.ship.has) {
+        G.log ("The %c{green}{0}%c{} has already been bought.".format(type));
+    } else if (this.ship.doubloons >= cost) {
+        this.ship.doubloons -= cost;
+        this.ship.has [type] = true;
+        G.log ("%c{green}{0}%c{} Git!".format(type));
+    } else {
+        G.log ("Not enough Booty for the %c{green}{0}%c{}.".format(type));
     }
 };
 
