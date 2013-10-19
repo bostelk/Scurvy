@@ -81,6 +81,8 @@ Ship.prototype.getSailEff = function () {
 };
 
 Ship.prototype.wait = function () {
+    this.fixShip();
+    this.ConsumeFood();
 };
 
 Ship.prototype.move = function (x, y) {
@@ -186,5 +188,13 @@ Ship.prototype.fixShip = function() {
     var difference = this.health - prevHealth;
     if ( difference > 0 ) {
         console.log("Bosun repaired ship for " + difference);
+    }
+};
+
+Ship.prototype.ConsumeFood = function() {
+    for ( var i = 0; i < this.crewMembers.length; i++ ) {
+        var member = this.crewMembers[i];
+        member.hunger -= 1;
+        console.log( member.name + " is now " + Crew.HungerValues[member.hunger]);
     }
 };
