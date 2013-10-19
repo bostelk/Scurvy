@@ -80,8 +80,16 @@ Ship.prototype.getSailEff = function () {
 Ship.prototype.move = function (x, y) {
     if (!G.map.canMove (x, y))
         return;
-    if (x == 3) {
-        G.encounter.encountered = true;
+
+    var tile = G.map.getTile (x, y);
+    var entity = G.map.getEntity (x, y);
+
+    if (tile == TileType.PIRATES) {
+        x = x -1;
+        console.log ("fight pirates");
+    } else if (tile == TileType.TREASURE) {
+        console.log ("find treasure");
+        G.display.drawText(0, 9, "Find 10 coins.", "red");
     }
 
     this._x = x;

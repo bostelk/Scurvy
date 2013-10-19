@@ -28,7 +28,6 @@ Game.prototype.init = function() {
 
     this.ship = new Ship (0, 0);
     this.splash = new Splash (0, 0);
-    this.encounter = new MultipleChoiceEncounter (3, 0);
 };
 
 Game.prototype.start = function() {
@@ -60,7 +59,6 @@ Game.prototype.draw =function () {
     this.display.clear ();
 
     this.map.draw ();
-    this.encounter.draw ();
     this.ship.draw ();
     //normal maps go here yo!
     this.display.drawText (0, 1, "Your ship: Bluenose ", 50);
