@@ -62,7 +62,7 @@ Game.prototype.draw =function () {
     this.map.draw ();
     this.encounter.draw ();
     this.ship.draw ();
-
+    //normal maps go here yo!
     this.display.drawText (0, 1, "Your ship: Bluenose ", 50);
 
     this.splash.draw ();

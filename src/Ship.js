@@ -1,5 +1,5 @@
 var Ship = function(x, y) {
-
+    this.hitPoints = 100;
     this.crewMembers = [];
 
     for( var i = 0; i < Ship.CREW_SIZE; ++i ){
@@ -116,4 +116,27 @@ Ship.prototype.displayMorale = function() {
 
         console.log(line);
     }
+};
+
+Ship.prototype.fight(var pirate) {
+
+    if ( pirate.damage > ship.health ) {
+        //kill off crew member.
+        var killOff = Random.betweeni(0, crewMembers.length);
+        console.log( "we just Lost " + crewMembers(killOff);
+        this.crewMembers = this.crewMembers.splice(killOff);
+    }
+
+    this.health - pirate.damage;
+    pirate.health -= 20;
+    return pirate;
+    //Damage ship
+    //kill/injure members.
 }
+
+Ship.prototype.endOfTurnUpdate() = function() {
+
+    for( var i = 0; i < 
+}
+
+
