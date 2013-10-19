@@ -92,6 +92,7 @@ Game.prototype.switchState = function (state) {
 };
 
 Game.prototype.spendDays = function (amount) {
+    //fun
     this.date.setTime(G.date.getTime() + 60 * 60 * 24 * 1000 * amount);
 };
 
@@ -113,10 +114,11 @@ Game.prototype.draw =function () {
     );
     this.display.drawText (0, 8, info);
 
-    var moreinfo = "Booty: {0}".format (this.ship.doubloons);
+    var moreinfo = "Booty: {0} Food: {1}".format (this.ship.doubloons, this.ship.food);
     this.display.drawText (0, 9, moreinfo);
 
     if (this.messages.length > 0) {
+
         var message = this.messages.pop ();
         this.display.drawText (0, 7, message);
     }

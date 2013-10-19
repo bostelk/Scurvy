@@ -4,6 +4,7 @@ var Ship = function(x, y) {
     this.sailSpeed = SailRate.HALF;
     this.doubloons = 0;
     this.crewMembers = [];
+    this.food = 600;
 
     for( var i = 0; i < Ship.CREW_SIZE; ++i ){
         this.crewMembers.push(new Crew());
@@ -181,7 +182,12 @@ Ship.prototype.getMemberOfRank = function(rank) {
 Ship.prototype.consumeFood = function() {
     for ( var i = 0; i < this.crewMembers.length; i++ ) {
         var member = this.crewMembers[i];
-        member.hunger -= 1;
+        console.log("{0}, {1}".format( member.hunger, Crew.Hunger));
+        if ( (member.hunger <= Crew.HungerValues.Hungry) && (this.food > 0)) {
+            this.food -= 1;
+        } else {
+            member.hunger -= 1;
+        }
         console.log( member.name + " is now " + Crew.HungerValues[member.hunger]);
     }
 };
