@@ -209,11 +209,11 @@ Game.prototype.sellFood = function (amount) {
     }
 };
 
-Game.prototype.buyCrew = function (amount) {
-    if (this.ship.crewMembers.length < Ship.CREW_SIZE) {
+Game.prototype.hireCrew = function () {
+    var cost = 100;
+    if (this.ship.doubloons - cost >= 0 && this.ship.crewMembers.length < Ship.CREW_SIZE) {
         var member = new Crew();
-        var value = member.getValue ();
-        this.ship.doubloons -= value;
+        this.ship.doubloons -= cost;
         G.log ("Recruited %c{orange}{0}%c{} as %c{purple}{1}%c{} for %c{yellow}{2}%c{}.".format (
             member.name,
             Crew.RankValues[member.rank],
@@ -225,7 +225,7 @@ Game.prototype.buyCrew = function (amount) {
     }
 };
 
-Game.prototype.sellCrew = function (amount) {
+Game.prototype.fireCrew = function () {
     if (this.ship.crewMembers.length > 6) {
         var member = this.ship.crewMembers.pop ();
         //var value = member.getValue () * 0.9;
