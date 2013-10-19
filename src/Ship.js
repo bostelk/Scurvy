@@ -1,6 +1,7 @@
 var Ship = function(x, y) {
     this.maxHealth = 100;
     this.health = this.maxHealth;
+    this.bosunIsAlive = true;
 
     this.crewMembers = [];
 
@@ -99,6 +100,9 @@ Ship.prototype.move = function (x, y) {
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
         G.display.drawText(0, 9, "Find 10 coins.", "red");
+    } else if (tile == TileType.OPEN_WATER ) {
+        console.log ("Smooth sailing");
+        this.openWaterUpdate();
     }
 
     this._x = x;
@@ -147,6 +151,9 @@ Ship.prototype.fight = function (pirate) {
         //kill off crew member.
         var killOff = Random.betweeni(0, this.crewMembers.length);
         var member = this.crewMembers[killOff];
+        if ( member.rank == Crew.RankEnum.Bosun ) {
+            this.bosunIsAlive = false;
+        }
         console.log( "we just Lost " + member.name);
         this.crewMembers = this.crewMembers.splice(killOff);
     }
@@ -161,3 +168,24 @@ Ship.prototype.fight = function (pirate) {
     // did we kill the pirate?
     return pirate.health <= 0;
 };
+
+Ship.prototype.openWaterUpdate = function() {
+    //check full sail.
+    if ( this.bosunIsAlive == true ) {
+        this.fixShip();
+    }
+};
+
+Ship.prototype.fixShip = function() {
+    returnedHealth = Random.betweeni(5, 20); 
+    var prevHealth = this.health;
+    if ( this.health > Ship.maxHealth ) {
+        this.health = Ship.maxHealth;
+    }
+    var difference = this.health - prevHealth;
+    if ( difference > 0 ) {
+        console.log("Bosun repaired ship for " + difference);
+    }
+};
+
+
