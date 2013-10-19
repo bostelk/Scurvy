@@ -102,12 +102,12 @@ Ship.prototype.move = function (x, y) {
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
         G.display.drawText(0, 9, "Find 10 coins.", "red");
+    } else if (entity instanceof Storm) {
+        console.log ("Surprise Storm");
+        this.storm();
     } else if (tile == TileType.OPEN_WATER ) {
         console.log ("Smooth sailing");
         this.openWaterUpdate();
-    } else if (tile == TileType.STORM) {
-        console.log ("You Gunna get fucked");
-        this.storm();
     }
 
     this._x = x;
@@ -203,7 +203,7 @@ Ship.prototype.consumeFood = function() {
 };
 
 Ship.prototype.storm = function() {
-    if ( this.sailSpeed = SailRate.FULL ) {
+    if ( this.sailSpeed == SailRate.FULL ) {
         this.health -= 30;
         this.DropMorale(); 
     }
