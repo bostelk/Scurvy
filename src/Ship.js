@@ -137,7 +137,7 @@ Ship.prototype.fight = function (pirate) {
     this.health -= pirateDamage;
     pirate.health -= damage;
 
-    G.log ("Cannons hit you for %c{red}{0} damage%c{}.".format (pirateDamage));
+    G.log ("Cannons hit us for %c{red}{0} damage%c{}.".format (pirateDamage));
 
     // did we kill the pirate?
     return pirate.health <= 0;
@@ -187,8 +187,12 @@ Ship.prototype.consumeFood = function() {
 
 Ship.prototype.storm = function() {
     if ( this.sailSpeed == SailRate.FULL ) {
-        this.health -= 30;
-        this.DropMorale(); 
+        var damage = 30;
+        this.health -= damage;
+        this.DropMorale();
+        G.log ("Lightning hits us for %c{red}{0} damage%c{}.".format (damage));
+    } else {
+        G.log ("Successfully navigated through the storm.");
     }
 };
 
