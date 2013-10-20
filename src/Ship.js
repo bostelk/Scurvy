@@ -29,8 +29,11 @@ var Ship = function(x, y) {
 
     this._x = x;
     this._y = y;
+
+    Ship.TimesBuilt ++;
 }
 
+Ship.TimesBuilt = 0;
 Ship.prototype.getSpeed = function() { return 100; }
 Ship.prototype.getX = function() { return this._x; }
 Ship.prototype.getY = function() { return this._y; }
@@ -128,7 +131,10 @@ Ship.prototype.draw = function() {
 }
 
 Ship.prototype.toString = function() {
-    return "Bluenose";
+    if (Ship.TimesBuilt == 1)
+        return "Bluenose";
+    else
+        return "Bluenose " + romanize (Ship.TimesBuilt);
 };
 
 Ship.prototype.displayCrew = function() {
