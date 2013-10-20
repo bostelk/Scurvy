@@ -8,6 +8,7 @@ var ItemType = {
 var Ship = function(x, y) {
     this.maxHealth = 100;
     this.health = this.maxHealth;
+    this.maxCrew = 20;
     this.sailSpeed = SailRate.HALF;
     this.doubloons = 1000;
     this.visibility = 3;
@@ -16,7 +17,7 @@ var Ship = function(x, y) {
 
     this.has = {};
 
-    for( var i = 0; i < Ship.CREW_SIZE; ++i ){
+    for( var i = 0; i < 6; ++i ){
         this.crewMembers.push(new Crew());
     }
     // manage crew roles.
@@ -24,14 +25,11 @@ var Ship = function(x, y) {
     this.crewMembers[1].rank = Crew.RankEnum.FirstMate;
     this.crewMembers[3].rank = Crew.RankEnum.Bosun;
     this.crewMembers[4].rank = Crew.RankEnum.WatchLeader;
-    this.crewMembers[5].rank = Crew.RankEnum.WatchLeader;
-    this.crewMembers[6].rank = Crew.RankEnum.Cook;
+    this.crewMembers[5].rank = Crew.RankEnum.Cook;
 
     this._x = x;
     this._y = y;
 }
-
-Ship.CREW_SIZE = 20;
 
 Ship.prototype.getSpeed = function() { return 100; }
 Ship.prototype.getX = function() { return this._x; }
@@ -61,7 +59,7 @@ Ship.prototype.getCrewEff = function () {
          activeCrew--;
         }
     }
-    return activeCrew / Ship.CREW_SIZE;
+    return activeCrew / this.maxCrew;
 };
 
 Ship.prototype.getShipEff = function () {

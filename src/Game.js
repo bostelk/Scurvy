@@ -116,7 +116,7 @@ Game.prototype.drawStatus = function () {
         this.ship.health,
         this.ship.maxHealth,
         this.ship.crewMembers.length,
-        Ship.CREW_SIZE,
+        this.ship.maxCrew,
         this.date.toDateString()
         //this.ship.getShipDamageString()
     );
@@ -216,7 +216,7 @@ Game.prototype.sellFood = function (amount) {
 
 Game.prototype.hireCrew = function () {
     var cost = 100;
-    if (this.ship.doubloons - cost >= 0 && this.ship.crewMembers.length < Ship.CREW_SIZE) {
+    if (this.ship.doubloons - cost >= 0 && this.ship.crewMembers.length < this.ship.maxCrew) {
         var member = new Crew();
         this.ship.doubloons -= cost;
         G.log ("Recruited %c{orange}{0}%c{} as %c{purple}{1}%c{} for %c{yellow}{2}%c{}.".format (
