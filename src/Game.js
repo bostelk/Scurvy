@@ -38,8 +38,6 @@ Game.prototype.init = function() {
 
     this.splash = new Splash (0, 0);
 
-    this.newGame ();
-
     this.switchState (GameState.TITLE);
 };
 
