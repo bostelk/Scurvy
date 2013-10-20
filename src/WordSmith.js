@@ -78,6 +78,31 @@ var WordSmith = new function () {
         "The Shameful Scream",
         "The Vile Dagger",
     ];
+    var places = [
+        "Batemans Bay",
+        "Bellambi Harbour",
+        "Bermagui Harbour",
+        "Boat Harbour",
+        "Bulli Harbour",
+        "Cape Hawke",
+        "Coalcliff Harbour",
+        "Coffs Harbour",
+        "Port of Eden",
+        "Hanleys Wall",
+        "Kiama Harbour",
+        "Newcastle Port",
+        "North Harbour",
+        "Port Botany",
+        "Port Hunter",
+        "Port Jackson",
+        "Port Kembla",
+        "Port Stephens",
+        "Shell Harbour",
+        "Sydney Harbour",
+        "Ulladulla Harbour",
+        "Wollongong Harbour",
+        "Port of Yamba"
+    ];
 
     this.getCrewName = function () {
         return crewNames.random ();
@@ -85,5 +110,9 @@ var WordSmith = new function () {
 
     this.getPirateName = function () {
         return pirateNames.random ();
+    };
+
+    this.getPlace = function () {
+        return places.random ();
     };
 };

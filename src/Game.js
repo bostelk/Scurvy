@@ -168,7 +168,7 @@ Game.prototype.enterState = function (state) {
 
             // the ship is built on the first voyage.
             if (this.voyages.length == 0) {
-                this.log ("%c{gold}The {0} is built!%c{}".format (this.ship.toString()));
+                this.log ("The %c{gold}{0}%c{} is built!".format (this.ship.toString()));
                 for (var i = 0; i < this.ship.crewMembers.length; i++) {
                     var member = this.ship.crewMembers [i];
                     this.log ("%c{green}{0} joins%c{} your crew as {1}.".format (
@@ -203,7 +203,11 @@ Game.prototype.enterState = function (state) {
             this.display.clear();
             this.messages.clear();
 
-            G.log ("%c{gold}{0}%c{} marks the start of your long voyage.".format(this.date.toDateString()));
+            G.log ("On %c{teal}{0}%c{} the %c{gold}{1}%c{} set sail for %c{teal}{2}%c{}.".format(
+                this.date.toDateString(),
+                this.ship.toString (),
+                WordSmith.getPlace ()
+            ));
             break;
         case GameState.GAME_OVER:
             this.voyages [this.voyages.length - 1]["end"] = new Date (this.date);

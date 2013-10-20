@@ -291,6 +291,16 @@ Ship.prototype.getMemberOfRank = function(rank) {
     return null;
 };
 
+Ship.prototype.getMembersOfRank = function(rank) {
+    var members = [];
+    for (var i = 0; i < this.crewMembers.length; i++) {
+        var member = this.crewMembers [i];
+        if (member.rank == rank)
+            members.push (member);
+    }
+    return members;
+};
+
 Ship.prototype.consumeFood = function() {
     var newFoodVal = 0.0 + this.food;
     for ( var i = 0; i < this.crewMembers.length; i++ ) {
