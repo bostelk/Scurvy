@@ -236,6 +236,7 @@ Ship.prototype.fight = function (pirate) {
     // maybe ship effectiveness reduces damage.
 
     this.loseHealth (pirateDamage);
+    this.injureCrew ( );
     pirate.loseHealth (damage);
 
     G.log ("Cannons hit us for %c{red}{0} damage%c{}.".format (pirateDamage));
@@ -381,4 +382,16 @@ Ship.prototype.crewInfo = function () {
         info += Crew.RankSymbols[member.rank];
     }
     return info;
+}
+
+Ship.prototype.injureCrew = function () {
+    var rand = Random.betweeni(1, 100 );
+    console.log(rand);
+    if ( rand > 97 ) {
+        rand = Random.betweeni (1, this.crewMembers.length) - 1;
+        console.log(rand);
+        killOff = this.crewMembers[rand];
+        this.crewMembers.fastRemove(rand);
+        G.log( "%c{green}{0}%c{} the %c{purple}{1}%c{} has perished".format(killOff.name, Crew.RankValues[killOff.rank]));
+    }
 }
