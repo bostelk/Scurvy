@@ -102,6 +102,7 @@ Game.prototype.draw = function () {
             break;
         case GameState.PORT:
             this.display.clear ();
+            this.display.drawText (0, 0, "%c{brown}P O R T%c{}");
             this.drawLog();
             this.drawStatus();
             break;
@@ -115,6 +116,7 @@ Game.prototype.draw = function () {
             break;
         case GameState.GAME_OVER:
             this.display.clear ();
+            this.display.drawText (0, 0, "%c{red}G A M E  O V E R%c{}");
             this.drawLog();
             this.drawStatus();
             break;
