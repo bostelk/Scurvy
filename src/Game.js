@@ -177,6 +177,13 @@ Game.prototype.enterState = function (state) {
                     this.ship.toString (),
                     days
                 ));
+
+                // the crew works for 10 doublins/day, excluding the captain.
+                var cost = (this.ship.crewMembers.length - 1 - 1) * days * 10;
+                this.ship.doubloons -= cost;
+                G.log ("The crew takes their share. %c{yellow}{0} doubloons%c{} lost.".format (
+                    cost
+                ));
             }
 
             this.voyages.push ({});
