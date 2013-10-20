@@ -86,7 +86,7 @@ Ship.prototype.move = function (x, y) {
         var killed = this.fight (entity);
         // don't pass go until the pirate is dead.
         if (!killed)
-            x = x -1;
+            x = x - 1;
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
         this.doubloons += entity.value;
@@ -160,13 +160,13 @@ Ship.prototype.fight = function (pirate) {
     var damage = this.getDamage ();
     var pirateDamage = pirate.getDamage ();
 
-    if (pirateDamage >= this.health) {
+    if (this.crewMembers.length > 0 && pirateDamage >= this.health) {
         //kill off crew member.
         var index = Random.betweeni(0, this.crewMembers.length - 1);
-        this.crewMembers.fastRemove (index);
         var killed = this.crewMembers[index];
+        this.crewMembers.fastRemove (index);
 
-        G.log("We just lost {0}".format(killed.name));
+        G.log("We just %c{red}lost {0}%c{}.".format(killed.name));
 
         // promote someone to captain.
         // I like how some random gets to become captain.
@@ -174,9 +174,9 @@ Ship.prototype.fight = function (pirate) {
             var index = Random.betweeni(0, this.crewMembers.length - 1);
             var promoted = this.crewMembers[index];
 
-            G.log("{0} is promoted from {1} to Captain.".format (
+            G.log("{0} is %c{green}promoted%c{} from {1} to Captain.".format (
                 promoted.name,
-                promoted.rank
+                Crew.RankValues[promoted.rank]
             ));
 
             promoted.rank = Crew.RankEnum.Captain;
@@ -187,7 +187,6 @@ Ship.prototype.fight = function (pirate) {
     //Maybe factor in crew morale.
     //var crewEff = getCrewEff();
     // maybe ship effectiveness reduces damage.
-
 
     this.loseHealth (pirateDamage);
     pirate.loseHealth (damage);
