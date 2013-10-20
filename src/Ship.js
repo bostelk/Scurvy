@@ -52,6 +52,14 @@ Ship.prototype.sail = function (rate) {
     if ( this.sailSpeed == SailRate.HALF ){
         this.move (this._x + 1, this._y);
     } else {
+        if (this.getMembersOfRank (Crew.RankEnum.DeckHand).length < 8) {
+            G.log ("%c{red}You need at least 8 deck hands to full sail.%c{}");
+            return;
+        } else if (this.getMembersOfRank (Crew.RankEnum.DeckHand).length < 2) {
+            G.log ("%c{red}You need at least 2 watch leaders to full sail.%c{}");
+            return;
+        }
+
         // when we're close to the edge switch to moving one tile.
         if (!G.map.canMove (this._x + 2, this._y))
             this.move (this._x + 1, this._y);
