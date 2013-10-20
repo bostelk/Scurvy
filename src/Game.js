@@ -241,7 +241,7 @@ Game.prototype.hireCrew = function () {
     if (this.ship.doubloons - cost >= 0 && this.ship.crewMembers.length < this.ship.maxCrew) {
         var member = new Crew();
         this.ship.doubloons -= cost;
-        G.log ("Recruited %c{orange}{0}%c{} as %c{purple}{1}%c{} for %c{yellow}{2}%c{}.".format (
+        G.log ("Recruited %c{orange}{0}%c{} as %c{purple}{1}%c{} for %c{yellow}{2}%c{} doubloons.".format (
             member.name,
             Crew.RankValues[member.rank],
             cost

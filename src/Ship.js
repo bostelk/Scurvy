@@ -304,6 +304,8 @@ Ship.prototype.getVisibility = function() {
 
 Ship.prototype.getItemString = function() {
     var result = "";
+    if (Object.keys (this.has) == 0)
+        return "none";
     if (ItemType.Cannon_3 in this.has) {
         result += "Ⅲ";
     } else if (ItemType.Cannon_2 in this.has) {
