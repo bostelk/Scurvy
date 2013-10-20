@@ -281,7 +281,7 @@ Ship.prototype.fixShip = function() {
     if (bosun == null)
         return;
 
-    returnedHealth = Math.floor (Random.betweeni(5, 20) * this.getRepairEff () * this.getCrewEff ());
+    returnedHealth = Math.floor (Random.betweeni(this.maxHealth * 0.01, this.maxHealth * 0.1) * this.getRepairEff () * this.getCrewEff ());
     var prevHealth = this.health;
     this.gainHealth (returnedHealth);
     var difference = this.health - prevHealth;
