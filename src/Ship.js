@@ -283,10 +283,14 @@ Ship.prototype.getMemberOfRank = function(rank) {
 };
 
 Ship.prototype.consumeFood = function() {
+    var newFoodVal = 0.0 + this.food;
     for ( var i = 0; i < this.crewMembers.length; i++ ) {
         var member = this.crewMembers[i];
-        if ( (member.hunger <= Crew.HungerEnum.Hungry ) && this.food > 0 ) {
-            this.food -= 1;
+        if ( (member.hunger <= Crew.HungerEnum.Hungry ) && newFoodVal > 0 ) {
+            if ( this.hasCook ) {
+                newFoodVal -= 0.75;
+            }
+            else newFoodVal -= 1;
         }
         else {
             member.hunger -= (member.hunger == Crew.HungerEnum.Starving) ? 0 : 1;
@@ -296,6 +300,7 @@ Ship.prototype.consumeFood = function() {
         }
         console.log( member.name + " is now " + Crew.HungerValues[member.hunger]);
     }
+    this.food = Math.floor (newFoodVal);
 };
 
 Ship.prototype.storm = function() {
