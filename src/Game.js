@@ -125,7 +125,7 @@ Game.prototype.drawStatus = function () {
         this.date.toDateString()
         //this.ship.getShipDamageString()
     );
-    var moreinfo = "Doubloons:{0} Food:{1} Items:{2}".format (
+    var moreinfo = "Doubloons:{0}  Food:{1}    Items:{2}".format (
         this.ship.doubloons,
         this.ship.food,
         this.ship.getItemString ()
