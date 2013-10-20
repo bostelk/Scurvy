@@ -53,6 +53,14 @@ Ship.prototype.sail = function (rate) {
     if ( this.sailSpeed == SailRate.HALF ){
         this.move (this._x + 1, this._y);
     } else {
+        if (this.getMembersOfRank (Crew.RankEnum.DeckHand).length < 8) {
+            G.log ("%c{red}You need at least 8 deck hands to full sail.%c{}");
+            return;
+        } else if (this.getMembersOfRank (Crew.RankEnum.DeckHand).length < 2) {
+            G.log ("%c{red}You need at least 2 watch leaders to full sail.%c{}");
+            return;
+        }
+
         // when we're close to the edge switch to moving one tile.
         if (!G.map.canMove (this._x + 2, this._y))
             this.move (this._x + 1, this._y);
@@ -61,7 +69,7 @@ Ship.prototype.sail = function (rate) {
     }
 
     // game over bro.
-    if (this.crewMembers.length == 0 && this.health == 0) {
+    if (this.health == 0) {
         G.switchState (GameState.GAME_OVER);
     }
 
@@ -231,7 +239,7 @@ Ship.prototype.fight = function (pirate) {
     pirate.loseHealth (damage);
 
     G.log ("Cannons hit us for %c{red}{0} damage%c{}.".format (pirateDamage));
-    G.log ("Your Cannons Fire back for %c{yellow}{0} damage%c{}".format ( damage));
+    G.log ("Your Cannons fire back for %c{yellow}{0} damage%c{}".format ( damage));
 
     // did we kill the pirate?
     return pirate.health <= 0;
