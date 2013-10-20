@@ -154,19 +154,33 @@ Game.prototype.enterState = function (state) {
         case GameState.PORT:
             document.getElementById("port").style.display = "block";
             this.display.clear();
+            this.messages.clear();
 
-            this.log ("The {0} is built!".format (this.ship.toString()));
-            for (var i = 0; i < this.ship.crewMembers.length; i++) {
-                var member = this.ship.crewMembers [i];
-                this.log ("%c{green}{0} joins%c{} your crew as {1}.".format (
-                    member.name,
-                    Crew.RankValues[member.rank]
+            // the ship is built on the first voyage.
+            if (this.voyages.length == 0) {
+                this.log ("%c{gold}The {0} is built!%c{}".format (this.ship.toString()));
+                for (var i = 0; i < this.ship.crewMembers.length; i++) {
+                    var member = this.ship.crewMembers [i];
+                    this.log ("%c{green}{0} joins%c{} your crew as {1}.".format (
+                        member.name,
+                        Crew.RankValues[member.rank]
+                    ));
+                }
+            // back from the long voyage.
+            } else {
+                this.voyages [this.voyages.length - 1]["end"] = new Date (this.date);
+                var voyage = this.voyages [this.voyages.length - 1];
+
+                var diff = voyage["end"] - voyage["start"];
+                var days = (voyage.end - voyage.start) / (60 * 60 * 24 * 1000);
+                G.log ("The {0} returns from being %c{teal}{1} days%c{} at sea.".format (
+                    this.ship.toString (),
+                    days
                 ));
             }
 
             this.voyages.push ({});
             this.voyages [this.voyages.length - 1]["start"] = new Date (this.date);
-            //G.log ("Gather supplies for your voyage.");
             break;
         case GameState.VOYAGE:
             document.getElementById("voyage").style.display = "block";

@@ -83,7 +83,7 @@ Map.prototype.getEntity = function (x, y) {
 };
 
 Map.prototype.isTheEnd = function (x, y) {
-    return x >= this.width;
+    return x >= this.width - 1;
 };
 
 Map.getTileColor = function (tile) {
