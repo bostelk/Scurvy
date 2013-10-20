@@ -373,3 +373,12 @@ ShipDamageDescriptors  = {
     9 : "Looking great",
     10: "Never Been Better"
 };
+
+Ship.prototype.crewInfo = function () {
+    var info = "";
+    for ( var i = 0; i < this.crewMembers.length; ++i) {
+        member = this.crewMembers[i];
+        info += Crew.RankSymbols[member.rank];
+    }
+    return info;
+}
