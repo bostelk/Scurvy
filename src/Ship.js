@@ -84,6 +84,7 @@ Ship.prototype.move = function (x, y) {
     if (entity instanceof PirateShip) {
         console.log ("fight pirates");
         var killed = this.fight (entity);
+        // don't pass go until the pirate is dead.
         if (!killed)
             x = x -1;
     } else if (entity instanceof Treasure) {
@@ -165,7 +166,7 @@ Ship.prototype.fight = function (pirate) {
         this.crewMembers.fastRemove (index);
         var killed = this.crewMembers[index];
 
-        G.log("We just lost " + killed.name);
+        G.log("We just lost {0}".format(killed.name));
 
         // promote someone to captain.
         // I like how some random gets to become captain.

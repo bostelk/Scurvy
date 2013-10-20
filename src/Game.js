@@ -79,7 +79,7 @@ Game.prototype.tick = function () {
             break;
         case GameState.END_VOYAGE:
             break;
-        case GameState.FINISHED:
+        case GameState.END_GAME:
             break;
     }
 
@@ -150,6 +150,8 @@ Game.prototype.enterState = function (state) {
             document.getElementById("voyage").style.display = "block";
             document.getElementById("title").style.display = "none";
             document.getElementById("start_voyage").style.display = "none";
+
+            G.log ("%c{gold}{0}%c{} marks the start of your long voyage.".format(this.date.toDateString()));
             break;
         case GameState.END_VOYAGE:
             break;
