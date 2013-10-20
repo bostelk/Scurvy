@@ -10,8 +10,8 @@ PirateShip.prototype.getDamage = function () {
     return Random.betweeni (1, 5);
 };
 
-PirateShip.prototype.takeDamage = function (amount) {
-    this.health -= amount;
+PirateShip.prototype.loseHealth = function (amount) {
+    this.health = Math.clamp (this.health - amount, 0, this.maxHealth);
     if (this.health <= 0)
         this.removeNextUpdate = true;
 };

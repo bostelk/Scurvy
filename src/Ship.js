@@ -85,8 +85,6 @@ Ship.prototype.move = function (x, y) {
         var killed = this.fight (entity);
         if (!killed)
             x = x -1;
-        else
-            entity.removeNextUpdate = true;
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
         this.doubloons += entity.value;
@@ -183,17 +181,28 @@ Ship.prototype.fight = function (pirate) {
             this.crewMembers[index] = promoted;
         }
     }
+
     //Maybe factor in crew morale.
     //var crewEff = getCrewEff();
     // maybe ship effectiveness reduces damage.
-    this.health -= pirateDamage;
-    pirate.health -= damage;
+
+
+    this.loseHealth (pirateDamage);
+    pirate.loseHealth (damage);
 
     G.log ("Cannons hit us for %c{red}{0} damage%c{}.".format (pirateDamage));
     G.log ("Your Cannons Fire back for %c{yellow}{0} damage%c{}".format ( damage));
 
     // did we kill the pirate?
     return pirate.health <= 0;
+};
+
+Ship.prototype.loseHealth = function(amount) {
+    this.health = Math.clamp (this.health - amount, 0, this.maxHealth);
+};
+
+Ship.prototype.gainHealth = function(amount) {
+    this.health = Math.clamp (this.health + amount, 0, this.maxHealth);
 };
 
 Ship.prototype.openWaterUpdate = function() {
@@ -213,10 +222,7 @@ Ship.prototype.fixShip = function() {
 
     returnedHealth = Random.betweeni(5, 20);
     var prevHealth = this.health;
-    this.health += returnedHealth;
-    if ( this.health > this.maxHealth ) {
-        this.health = this.maxHealth;
-    }
+    this.gainHealth (returnedHealth);
     var difference = this.health - prevHealth;
     if ( difference > 0 ) {
         G.log("{0} repaired ship for %c{green}{1}%c{}.".format(
