@@ -180,7 +180,7 @@ Ship.prototype.fight = function (pirate) {
             var index = Random.betweeni(0, this.crewMembers.length - 1);
             var promoted = this.crewMembers[index];
 
-            G.log("{0} is %c{green}promoted%c{} from {1} to Captain.".format (
+            G.log("%c{green}{0} is promoted%c{} from {1} to Captain.".format (
                 promoted.name,
                 Crew.RankValues[promoted.rank]
             ));

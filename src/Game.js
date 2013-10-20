@@ -21,15 +21,16 @@ var Game = function () {
     this.messages = [];
 
     this.state = null;
-    this.switchState (GameState.START_VOYAGE);
-
     this.date = null;
 };
+
+Game.MAX_LOG_ENTRIES = 6;
 
 Game.prototype.init = function() {
     this.display = new ROT.Display ({
         width: 80,
         height: 10,
+        fontFamily: "monospace",
         spacing:1.1
     });
 
@@ -44,6 +45,10 @@ Game.prototype.init = function() {
 
     // the adventure starts: day, month, year.
     this.date = new Date (1700, 9, 1);
+
+    this.voyages = [];
+
+    this.switchState (GameState.START_VOYAGE);
 };
 
 Game.prototype.start = function() {
@@ -123,6 +128,7 @@ Game.prototype.drawStatus = function () {
     var moreinfo = "Doubloons:{0} Food:{1}".format (this.ship.doubloons, this.ship.food);
     this.display.drawText (0, 8, info);
     this.display.drawText (0, 9, moreinfo);
+    this.display.drawText (76, 9, "ⅠⅡⅢ℡");
 
     for (var i = 0; i < this.messages.length; i++) {
         var message = this.messages [this.messages.length - 1- i];
@@ -142,10 +148,22 @@ Game.prototype.enterState = function (state) {
             document.getElementById("title").style.display = "none";
             document.getElementById("voyage").style.display = "none";
 
+            this.log ("The {0} is built!".format (this.ship.toString()));
+            for (var i = 0; i < this.ship.crewMembers.length; i++) {
+                var member = this.ship.crewMembers [i];
+                this.log ("%c{green}{0} joins%c{} your crew as {1}.".format (
+                    member.name,
+                    Crew.RankValues[member.rank]
+                ));
+            }
+
+            this.voyages.push ({});
+            this.voyages [this.voyages.length - 1]["start"] = new Date (this.date);
             //G.log ("Gather supplies for your voyage.");
             break;
         case GameState.VOYAGE:
             this.display.clear();
+            this.messages.clear();
             document.getElementById("voyage").style.display = "block";
             document.getElementById("title").style.display = "none";
             document.getElementById("start_voyage").style.display = "none";
@@ -185,7 +203,7 @@ Game.prototype.log = function (message) {
     message = message.toString ();
     console.log (message);
 
-    if (this.messages.length > 4) {
+    if (this.messages.length > Game.MAX_LOG_ENTRIES) {
         this.messages.shift ();
         this.messages.push (message);
     } else {
