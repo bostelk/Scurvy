@@ -291,7 +291,7 @@ Ship.prototype.consumeFood = function() {
         else {
             member.hunger -= (member.hunger == Crew.HungerEnum.Starving) ? 0 : 1;
             if (member.hunger == Crew.HungerEnum.Starving) {
-                member.morale -= (member.morale == Crew.MoralEnum.Mutinous) ? 0 : 1;
+                member.morale -= (member.morale == Crew.MoraleEnum.Mutinous) ? 0 : 1;
             }
         }
         console.log( member.name + " is now " + Crew.HungerValues[member.hunger]);
