@@ -95,7 +95,7 @@ Ship.prototype.wait = function () {
     G.spendDays (1);
     var success = this.fixShip();
     if (!success) {
-        G.log ("Nothing interesting happens. %c{teal}{0} day%{} goes by.".format(1));
+        G.log ("Nothing interesting happens. %c{teal}{0} day%c{} goes by.".format(1));
     }
 };
 
