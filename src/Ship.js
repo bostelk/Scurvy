@@ -198,7 +198,15 @@ Ship.prototype.displayMorale = function() {
 };
 
 Ship.prototype.getDamage = function () {
-    return Random.betweeni (10, 20);
+    var value = Random.betweeni (10, 20);
+
+    if (this.hasItem (ItemType.Cannon_1))
+        value += Random.betweeni (10, 20);
+    if (this.hasItem (ItemType.Cannon_2))
+        value += Random.betweeni (10, 20);
+    if (this.hasItem (ItemType.Cannon_3))
+        value += Random.betweeni (10, 20);
+    return value;
 };
 
 Ship.prototype.fight = function (pirate) {
@@ -243,6 +251,10 @@ Ship.prototype.fight = function (pirate) {
 
     // did we kill the pirate?
     return pirate.health <= 0;
+};
+
+Ship.prototype.hasItem = function(item) {
+    return item in this.has;
 };
 
 Ship.prototype.loseHealth = function(amount) {
