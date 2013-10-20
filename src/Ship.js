@@ -198,7 +198,15 @@ Ship.prototype.displayMorale = function() {
 };
 
 Ship.prototype.getDamage = function () {
-    return Random.betweeni (10, 20);
+    var value = Random.betweeni (10, 20);
+
+    if (this.hasItem (ItemType.Cannon_1))
+        value += Random.betweeni (10, 20);
+    if (this.hasItem (ItemType.Cannon_2))
+        value += Random.betweeni (10, 20);
+    if (this.hasItem (ItemType.Cannon_3))
+        value += Random.betweeni (10, 20);
+    return value;
 };
 
 Ship.prototype.fight = function (pirate) {
@@ -246,6 +254,10 @@ Ship.prototype.fight = function (pirate) {
     return pirate.health <= 0;
 };
 
+Ship.prototype.hasItem = function(item) {
+    return item in this.has;
+};
+
 Ship.prototype.loseHealth = function(amount) {
     this.health = Math.clamp (this.health - amount, 0, this.maxHealth);
 };
@@ -290,6 +302,16 @@ Ship.prototype.getMemberOfRank = function(rank) {
             return member;
     }
     return null;
+};
+
+Ship.prototype.getMembersOfRank = function(rank) {
+    var members = [];
+    for (var i = 0; i < this.crewMembers.length; i++) {
+        var member = this.crewMembers [i];
+        if (member.rank == rank)
+            members.push (member);
+    }
+    return members;
 };
 
 Ship.prototype.consumeFood = function() {
