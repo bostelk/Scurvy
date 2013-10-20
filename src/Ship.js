@@ -20,6 +20,7 @@ var Ship = function(x, y) {
     this.visibility = 3;
     this.crewMembers = [];
     this.food = 2000;
+    this.hasCook = false;
 
     this.has = {};
 
