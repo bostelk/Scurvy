@@ -53,6 +53,15 @@ Game.prototype.newGame = function() {
     this.voyages = [];
 };
 
+Game.prototype.newVoyage = function() {
+    this.map.generate (80, 1);
+    this.ship._x = 0;
+    this.ship._y = 0;
+
+    this.voyages.push ({});
+    this.voyages [this.voyages.length - 1]["start"] = new Date (this.date);
+};
+
 Game.prototype.start = function() {
     this._tickId = Browser.requestTick(this.internalTick.bind(this));
 
@@ -186,8 +195,7 @@ Game.prototype.enterState = function (state) {
                 ));
             }
 
-            this.voyages.push ({});
-            this.voyages [this.voyages.length - 1]["start"] = new Date (this.date);
+            this.newVoyage ();
             break;
         case GameState.VOYAGE:
             document.getElementById("voyage").style.display = "block";
