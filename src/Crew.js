@@ -73,8 +73,8 @@ Crew.RankValues =  {
 Crew.RankSymbols = {
     0 : "%c{gold}C%c{}",
     1 : "%c{green}F%c{}",
-    2 : "%c{pink}B%c{}",
-    3 : "%c{red}%W{}",
+    2 : "%c{#FF00EB}B%c{}",
+    3 : "%c{red}W%c{}",
     4 : "%c{orange}D%c{}",
     5 : "%c{teal}c%c{}"
 }
