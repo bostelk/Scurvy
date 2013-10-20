@@ -264,7 +264,7 @@ Ship.prototype.consumeFood = function() {
 Ship.prototype.storm = function() {
     if ( this.sailSpeed == SailRate.FULL ) {
         var damage = 30;
-        this.health -= damage;
+        this.loseHealth (damage);
         G.log ("Lightning hits us for %c{red}{0} damage%c{}.".format (damage));
     } else {
         G.log ("Successfully navigated through the storm.");
