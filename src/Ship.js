@@ -68,7 +68,10 @@ Ship.prototype.getShipEff = function () {
 
 Ship.prototype.wait = function () {
     G.spendDays (1);
-    this.fixShip();
+    var success = this.fixShip();
+    if (!success) {
+        G.log ("Nothing interesting happens. A day goes by.");
+    }
 };
 
 Ship.prototype.move = function (x, y) {
@@ -227,7 +230,9 @@ Ship.prototype.fixShip = function() {
             bosun.name,
             difference
         ));
+        return true;
     }
+    return false;
 };
 
 Ship.prototype.getMemberOfRank = function(rank) {
