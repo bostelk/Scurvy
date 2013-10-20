@@ -1,8 +1,14 @@
 var ItemType = {
     Telescope: "Telescope",
-    Cannon_I: "Cannon I",
-    Cannon_II: "Cannon II",
-    Cannon_III: "Cannon III",
+    Cannon_1: "Cannon I",
+    Cannon_2: "Cannon II",
+    Cannon_3: "Cannon III",
+};
+var ItemCost = {
+    "Telescope": 2000,
+    "Cannon I": 2000,
+    "Cannon II": 4000,
+    "Cannon III": 6000,
 };
 
 var Ship = function(x, y) {
@@ -90,6 +96,10 @@ Ship.prototype.move = function (x, y) {
         // don't pass go until the pirate is dead.
         if (!killed)
             x = x - 1;
+
+        if (this.crew == 0 && this.health == 0) {
+            G.log ("The {0} sinks to the bottom of the ocean.".format(this.toString()));
+        }
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
         this.doubloons += entity.value;
@@ -290,6 +300,18 @@ Ship.prototype.getVisibility = function() {
     }else {
         return 2;
     }
+};
+
+Ship.prototype.getItemString = function() {
+    var result = "";
+    if (ItemType.Cannon_3 in this.has) {
+        result += "Ⅲ";
+    } else if (ItemType.Cannon_2 in this.has) {
+        result += "Ⅱ";
+    } else if (ItemType.Cannon_1 in this.has) {
+        result += "Ⅰ";
+    }
+    return result;
 };
 
 Ship.prototype.getShipDamageString = function() {

@@ -125,10 +125,13 @@ Game.prototype.drawStatus = function () {
         this.date.toDateString()
         //this.ship.getShipDamageString()
     );
-    var moreinfo = "Doubloons:{0} Food:{1}".format (this.ship.doubloons, this.ship.food);
+    var moreinfo = "Doubloons:{0} Food:{1} Items:{2}".format (
+        this.ship.doubloons,
+        this.ship.food,
+        this.ship.getItemString ()
+    );
     this.display.drawText (0, 8, info);
     this.display.drawText (0, 9, moreinfo);
-    this.display.drawText (76, 9, "ⅠⅡⅢ℡");
 
     for (var i = 0; i < this.messages.length; i++) {
         var message = this.messages [this.messages.length - 1- i];
@@ -261,15 +264,19 @@ Game.prototype.fireCrew = function () {
 };
 
 Game.prototype.buyItem = function (type) {
-    var cost = 100;
+    var cost = ItemCost[type];
     if (type in this.ship.has) {
         G.log ("The %c{green}{0}%c{} has already been bought.".format(type));
     } else if (this.ship.doubloons >= cost) {
         this.ship.doubloons -= cost;
-        this.ship.has [type] = true;
+        this.ship.has [type] = 1;
         G.log ("%c{green}{0}%c{} Git!".format(type));
     } else {
-        G.log ("Not enough Booty for the %c{green}{0}%c{}.".format(type));
+        var need = cost - this.ship.doubloons;
+        G.log ("Need %c{yellow}{0} more doubloons%c{} for the %c{green}{1}%c{}.".format(
+            need,
+            type
+        ));
     }
 };
 
