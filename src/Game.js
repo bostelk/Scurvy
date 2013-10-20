@@ -244,7 +244,7 @@ Game.prototype.hireCrew = function (rank) {
         var member = new Crew();
         member.rank = rank;
         this.ship.doubloons -= cost;
-        G.log ("Recruited %c{orange}{0}%c{} as %c{purple}{1}%c{}.".format (
+        G.log ("Hired %c{orange}{0}%c{} as %c{purple}{1}%c{}.".format (
             member.name,
             Crew.RankValues[member.rank],
             cost
@@ -256,7 +256,7 @@ Game.prototype.hireCrew = function (rank) {
 };
 
 Game.prototype.fireCrew = function () {
-    if (this.ship.crewMembers.length > 6) {
+    if (this.ship.crewMembers.length > 1) {
         var member = this.ship.crewMembers.pop ();
         //var value = member.getValue () * 0.9;
         //this.ship.doubloons += value;
