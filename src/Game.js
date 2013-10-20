@@ -180,7 +180,6 @@ Game.prototype.enterState = function (state) {
                 this.voyages [this.voyages.length - 1]["end"] = new Date (this.date);
                 var voyage = this.voyages [this.voyages.length - 1];
 
-                var diff = voyage["end"] - voyage["start"];
                 var days = (voyage.end - voyage.start) / (60 * 60 * 24 * 1000);
                 G.log ("The {0} returns from being %c{teal}{1} days%c{} at sea.".format (
                     this.ship.toString (),
@@ -206,10 +205,40 @@ Game.prototype.enterState = function (state) {
             G.log ("%c{gold}{0}%c{} marks the start of your long voyage.".format(this.date.toDateString()));
             break;
         case GameState.GAME_OVER:
+            this.voyages [this.voyages.length - 1]["end"] = new Date (this.date);
             document.getElementById("game_over").style.display = "block";
             this.display.clear ();
+            this.messages.clear ();
 
             G.log ("%c{red}The {0} sinks to the bottom of the ocean.%c{}".format(this.ship.toString()));
+
+            var totalPiratesSunk = 0;
+            var totalDays = 0;
+            for (var i = 0; i < this.voyages.length; i++) {
+                var voyage = this.voyages[i];
+
+                totalDays += (voyage.end - voyage.start) / (60 * 60 * 24 * 1000);
+                if ("pirates_sunk" in voyage) {
+                    totalPiratesSunk += voyage;
+                }
+            }
+
+            G.log ("The {0} went on {1} {2}.".format (
+                this.ship.toString (),
+                this.voyages.length,
+                this.voyages.length > 1 ? "voyages" : "voyage"
+            ));
+
+            G.log ("The {0} sunk {1} pirate ships.".format (
+                this.ship.toString (),
+                totalPiratesSunk
+            ));
+
+            G.log ("The {0} was at sea for a total of {1} {2}.".format (
+                this.ship.toString (),
+                totalDays,
+                totalDays > 1 ? "days" : "day"
+            ));
             break;
     }
 };
@@ -261,7 +290,7 @@ Game.prototype.sellFood = function (amount) {
 Game.prototype.hireCrew = function (rank) {
     var cost = Crew.getCost (rank);
     if (this.ship.crewMembers.length >= this.ship.maxCrew) {
-        G.log ("%c{red}The ship can hold another soul!%c{}");
+        G.log ("%c{red}The ship cannot hold another soul!%c{}");
     } else if (this.ship.doubloons - cost >= 0) {
         var member = new Crew();
         member.rank = rank;

@@ -230,7 +230,7 @@ Ship.prototype.fight = function (pirate) {
     pirate.loseHealth (damage);
 
     G.log ("Cannons hit us for %c{red}{0} damage%c{}.".format (pirateDamage));
-    G.log ("Your Cannons Fire back for %c{yellow}{0} damage%c{}".format ( damage));
+    G.log ("Your Cannons fire back for %c{yellow}{0} damage%c{}".format ( damage));
 
     // did we kill the pirate?
     return pirate.health <= 0;
