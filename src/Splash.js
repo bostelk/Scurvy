@@ -13,7 +13,7 @@ var Splash = function(x, y) {
 }
 
 Splash.prototype.tick = function() {
-    this._y += 1;
+    this._y += 1 * G._deltaSeconds;
     this.finished = this._y >= 10;
 };
 

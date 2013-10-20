@@ -8,6 +8,11 @@ var Map = function () {
     this.distance = 1000;
 };
 
+var TileType = {
+    OPEN_WATER : ".",
+    ROUGH_WATER : ",",
+};
+
 Map.prototype.generate = function (width, height) {
     this.width = width;
     this.height = height;
@@ -77,9 +82,8 @@ Map.prototype.getEntity = function (x, y) {
     return this.entities [y * this.width + x];
 };
 
-var TileType = {
-    OPEN_WATER : ".",
-    ROUGH_WATER : ".",
+Map.prototype.isTheEnd = function (x, y) {
+    return x >= this.width;
 };
 
 Map.getTileColor = function (tile) {

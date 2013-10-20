@@ -53,7 +53,7 @@ ___________________________________________________________________
             <div id="title">
                 <button onclick="G.switchState(GameState.VOYAGE);">Skip</button>
             </div>
-            <div id="start_voyage">
+            <div id="port">
                 <button onclick="G.buyFood (100)">Buy Food (100)</button>
                 <button onclick="G.sellFood (100)">Sell Food (100)</button>
                 <br>
@@ -75,6 +75,9 @@ ___________________________________________________________________
                 <button onclick="G.ship.sail(SailRate.FULL);">Full Sail</button>
                 <button onclick="G.ship.sail(SailRate.HALF);">Half Sail</button>
                 <button onclick="G.ship.wait();">Wait a day</button>
+            </div>
+            <div id="game_over">
+                <button onclick="G.switchState(GameState.TITLE);">Try again</button>
             </div>
             <button onclick="G.ship.displayMorale();">Crew Info</button>
         </div>

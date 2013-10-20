@@ -54,6 +54,17 @@ Ship.prototype.sail = function (rate) {
     } else {
         this.move ( this._x + 2, this._y);
     }
+
+    // game over bro.
+    if (this.crewMembers.length == 0 && this.health == 0) {
+        G.switchState (GameState.GAME_OVER);
+    }
+
+    // voyage finished.
+    if (G.map.isTheEnd (this._x, this._y)) {
+        G.switchState (GameState.PORT);
+    }
+
 };
 
 Ship.prototype.getCrewEff = function () {
@@ -101,10 +112,6 @@ Ship.prototype.move = function (x, y) {
         // don't pass go until the pirate is dead.
         if (!killed)
             x = x - 1;
-
-        if (this.crew == 0 && this.health == 0) {
-            G.log ("The {0} sinks to the bottom of the ocean.".format(this.toString()));
-        }
     } else if (entity instanceof Treasure) {
         console.log ("find treasure");
         this.doubloons += entity.value;
@@ -133,6 +140,10 @@ Ship.prototype.move = function (x, y) {
             this.openWaterUpdate();
             G.spendDays (1);
         }
+    } else if (tile == TileType.ROUGH_WATER ) {
+        G.spendDays (2);
+        var damage = Random.betweeni(1, 6);
+        G.log ("Rough waters. The ship springs a leak {0}".format(damage));
     }
 
     this._x = x;
@@ -191,17 +202,19 @@ Ship.prototype.fight = function (pirate) {
 
         // promote someone to captain.
         // I like how some random gets to become captain.
-        if (killed.rank == Crew.RankEnum.Captain) {
-            var index = Random.betweeni(0, this.crewMembers.length - 1);
-            var promoted = this.crewMembers[index];
+        if (this.crewMembers.length > 0) {
+            if (killed.rank == Crew.RankEnum.Captain) {
+                var index = Random.betweeni(0, this.crewMembers.length - 1);
+                var promoted = this.crewMembers[index];
 
-            G.log("%c{green}{0} is promoted%c{} from {1} to Captain.".format (
-                promoted.name,
-                Crew.RankValues[promoted.rank]
-            ));
+                G.log("%c{green}{0} is promoted%c{} from {1} to Captain.".format (
+                    promoted.name,
+                    Crew.RankValues[promoted.rank]
+                ));
 
-            promoted.rank = Crew.RankEnum.Captain;
-            this.crewMembers[index] = promoted;
+                promoted.rank = Crew.RankEnum.Captain;
+                this.crewMembers[index] = promoted;
+            }
         }
     }
 

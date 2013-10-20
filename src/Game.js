@@ -1,9 +1,8 @@
 var GameState = {
     TITLE: 0,
-    START_VOYAGE: 1,
+    PORT: 1,
     VOYAGE: 2,
-    END_VOYAGE: 3,
-    FINISHED: 4
+    GAME_OVER: 4
 };
 
 var Game = function () {
@@ -37,6 +36,14 @@ Game.prototype.init = function() {
     var screen = document.getElementById ("screen");
     screen.appendChild(this.display.getContainer());
 
+    this.splash = new Splash (0, 0);
+
+    this.newGame ();
+
+    this.switchState (GameState.TITLE);
+};
+
+Game.prototype.newGame = function() {
     this.map = new Map ();
     this.map.generate (80, 1);
 
@@ -45,10 +52,7 @@ Game.prototype.init = function() {
 
     // the adventure starts: day, month, year.
     this.date = new Date (1700, 9, 1);
-
     this.voyages = [];
-
-    this.switchState (GameState.START_VOYAGE);
 };
 
 Game.prototype.start = function() {
@@ -78,14 +82,6 @@ Game.prototype.tick = function () {
             if (this.splash.finished)
                 this.switchState (GameState.VOYAGE);
             break;
-        case GameState.START_VOYAGE:
-            break;
-        case GameState.VOYAGE:
-            break;
-        case GameState.END_VOYAGE:
-            break;
-        case GameState.END_GAME:
-            break;
     }
 
     this.draw ();
@@ -97,26 +93,29 @@ Game.prototype.draw = function () {
             this.display.clear ();
             this.splash.draw ();
             break;
-        case GameState.START_VOYAGE:
+        case GameState.PORT:
             this.display.clear ();
+            this.drawLog();
             this.drawStatus();
             break;
         case GameState.VOYAGE:
             this.display.clear ();
             this.map.draw ();
             this.ship.draw ();
+            this.drawLog();
             this.drawStatus();
             //normal maps go here yo!
             break;
-        case GameState.END_VOYAGE:
-            break;
-        case GameState.FINISHED:
+        case GameState.GAME_OVER:
+            this.display.clear ();
+            this.drawLog();
+            this.drawStatus();
             break;
     }
 };
 
 Game.prototype.drawStatus = function () {
-    var info = "Ship:{0}   Hp:{1}/{2}   Crew:{3}/{4}   Date:{5}".format (
+    var info = "Ship:{0}   Hull:{1}/{2}   Crew:{3}/{4}   Date:{5}".format (
         this.ship,
         this.ship.health,
         this.ship.maxHealth,
@@ -132,7 +131,9 @@ Game.prototype.drawStatus = function () {
     );
     this.display.drawText (0, 8, info);
     this.display.drawText (0, 9, moreinfo);
+};
 
+Game.prototype.drawLog = function () {
     for (var i = 0; i < this.messages.length; i++) {
         var message = this.messages [this.messages.length - 1- i];
         this.display.drawText (0, 7 - i, message);
@@ -140,16 +141,21 @@ Game.prototype.drawStatus = function () {
 };
 
 Game.prototype.enterState = function (state) {
+    // hide all buttons.
+    document.getElementById("port").style.display = "none";
+    document.getElementById("title").style.display = "none";
+    document.getElementById("voyage").style.display = "none";
+    document.getElementById("game_over").style.display = "none";
+
     switch (this.state) {
         case GameState.TITLE:
             document.getElementById("title").style.display = "block";
-            document.getElementById("start_voyage").style.display = "none";
-            document.getElementById("voyage").style.display = "none";
+            this.display.clear();
+            this.newGame ();
             break;
-        case GameState.START_VOYAGE:
-            document.getElementById("start_voyage").style.display = "block";
-            document.getElementById("title").style.display = "none";
-            document.getElementById("voyage").style.display = "none";
+        case GameState.PORT:
+            document.getElementById("port").style.display = "block";
+            this.display.clear();
 
             this.log ("The {0} is built!".format (this.ship.toString()));
             for (var i = 0; i < this.ship.crewMembers.length; i++) {
@@ -165,34 +171,23 @@ Game.prototype.enterState = function (state) {
             //G.log ("Gather supplies for your voyage.");
             break;
         case GameState.VOYAGE:
+            document.getElementById("voyage").style.display = "block";
+
             this.display.clear();
             this.messages.clear();
-            document.getElementById("voyage").style.display = "block";
-            document.getElementById("title").style.display = "none";
-            document.getElementById("start_voyage").style.display = "none";
 
             G.log ("%c{gold}{0}%c{} marks the start of your long voyage.".format(this.date.toDateString()));
             break;
-        case GameState.END_VOYAGE:
-            break;
-        case GameState.FINISHED:
+        case GameState.GAME_OVER:
+            document.getElementById("game_over").style.display = "block";
+            this.display.clear ();
+
+            G.log ("%c{red}The {0} sinks to the bottom of the ocean.%c{}".format(this.ship.toString()));
             break;
     }
 };
 
 Game.prototype.exitState = function (state) {
-    switch (this.state) {
-        case GameState.TITLE:
-            break;
-        case GameState.START_VOYAGE:
-            break;
-        case GameState.VOYAGE:
-            break;
-        case GameState.END_VOYAGE:
-            break;
-        case GameState.FINISHED:
-            break;
-    }
 };
 
 Game.prototype.switchState = function (state) {
@@ -219,7 +214,7 @@ Game.prototype.buyFood = function (amount) {
     if (this.ship.doubloons - cost >= 0) {
         this.ship.doubloons -= cost;
         this.ship.food += amount;
-        G.log ("Bought %c{green}{0} bushels%c{} of food for {0} %c{yellow}doubloons%c{}.".format(amount, cost));
+        G.log ("Bought %c{green}{0} bushels%c{} of food.".format(amount, cost));
     } else {
         G.log ("%c{red}We're broke dog.%c{}".format(amount));
     }
@@ -230,7 +225,7 @@ Game.prototype.sellFood = function (amount) {
     if (this.ship.food - amount >= 0) {
         this.ship.food -= amount;
         this.ship.doubloons += value;
-        G.log ("Sold %c{green}{0} bushels%c{} of food for %c{yellow}{1} doubloons%c{}.".format(amount, value));
+        G.log ("Sold %c{green}{0} bushels%c{} of food.".format(amount, value));
     } else {
         G.log ("%c{red}There's nothing left!%c{}".format(amount));
     }
@@ -262,7 +257,7 @@ Game.prototype.fireCrew = function () {
         //this.ship.doubloons += value;
         G.log ("Fired %c{orange}{0}%c{}.".format (member.name));
     } else {
-        G.log ("The elite six stick around.");
+        G.log ("The captain stays.");
     }
 };
 
