@@ -57,7 +57,11 @@ ___________________________________________________________________
             <div id="start_voyage">
                 <button onclick="G.buyFood (100)">Buy Food (100)</button>
                 <button onclick="G.sellFood (100)">Sell Food (100)</button>
-                <button onclick="G.hireCrew ()">Hire Crew</button>
+                <br>
+                <button onclick="G.hireCrew (Crew.RankEnum.FirstMate)">Hire FirstMate (1000)</button>
+                <button onclick="G.hireCrew (Crew.RankEnum.WatchLeader)">Hire WatchLeader (500)</button>
+                <button onclick="G.fireCrew (Crew.RankEnum.Cook)">Hire Cook (300)</button>
+                <button onclick="G.hireCrew (Crew.RankEnum.DeckHand)">Hire DeckHand (100)</button>
                 <button onclick="G.fireCrew ()">Fire Crew</button>
                 <br>
                 <button onclick="G.buyItem(ItemType.Telescope);">Buy Telescope</button>

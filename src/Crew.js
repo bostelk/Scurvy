@@ -5,8 +5,21 @@ var Crew = function() {
     this.rank = Crew.RankEnum.DeckHand;
 }
 
-Crew.prototype.getValue = function() {
-    return 100;
+Crew.getCost = function(rank) {
+    switch (rank) {
+        case Crew.RankEnum.Captain:
+            return 10000;
+        case Crew.RankEnum.FirstMate:
+            return 1000;
+        case Crew.RankEnum.WatchLeader:
+            return 500;
+        case Crew.RankEnum.Cook:
+            return 300;
+        case Crew.RankEnum.DeckHand:
+            return 100;
+        default:
+            return 0;
+    };
 };
 
 Crew.HungerEnum = {
@@ -45,7 +58,6 @@ Crew.RankEnum = {
     DeckHand : 4,
     Cook : 5,
 }
-
 
 Crew.RankValues =  {
     0 : "Captain",

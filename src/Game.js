@@ -236,19 +236,22 @@ Game.prototype.sellFood = function (amount) {
     }
 };
 
-Game.prototype.hireCrew = function () {
-    var cost = 100;
-    if (this.ship.doubloons - cost >= 0 && this.ship.crewMembers.length < this.ship.maxCrew) {
+Game.prototype.hireCrew = function (rank) {
+    var cost = Crew.getCost (rank);
+    if (this.ship.crewMembers.length >= this.ship.maxCrew) {
+        G.log ("%c{red}The ship can hold another soul!%c{}");
+    } else if (this.ship.doubloons - cost >= 0) {
         var member = new Crew();
+        member.rank = rank;
         this.ship.doubloons -= cost;
-        G.log ("Recruited %c{orange}{0}%c{} as %c{purple}{1}%c{} for %c{yellow}{2}%c{} doubloons.".format (
+        G.log ("Recruited %c{orange}{0}%c{} as %c{purple}{1}%c{}.".format (
             member.name,
             Crew.RankValues[member.rank],
             cost
         ));
         this.ship.crewMembers.push (member);
     } else {
-        G.log ("%c{red}We're full!%c{}");
+        G.log ("%c{red}We're broke dog.%c{}");
     }
 };
 

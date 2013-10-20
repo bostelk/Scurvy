@@ -23,15 +23,10 @@ var Ship = function(x, y) {
 
     this.has = {};
 
-    for( var i = 0; i < 6; ++i ){
-        this.crewMembers.push(new Crew());
-    }
-    // manage crew roles.
-    this.crewMembers[0].rank = Crew.RankEnum.Captain;
-    this.crewMembers[1].rank = Crew.RankEnum.FirstMate;
-    this.crewMembers[3].rank = Crew.RankEnum.Bosun;
-    this.crewMembers[4].rank = Crew.RankEnum.WatchLeader;
-    this.crewMembers[5].rank = Crew.RankEnum.Cook;
+    // you start with just a captain.
+    var captain = new Crew ();
+    captain.rank = Crew.RankEnum.Captain;
+    this.crewMembers.push (captain);
 
     this._x = x;
     this._y = y;
