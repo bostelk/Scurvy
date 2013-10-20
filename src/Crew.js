@@ -1,5 +1,5 @@
 var Crew = function() {
-    this.name = GetRandomPerson();
+    this.name = WordSmith.getCrewName();
     this.morale = Crew.MoraleEnum.Happy;
     this.hunger = Crew.HungerEnum.Full;
     this.rank = Crew.RankEnum.DeckHand;

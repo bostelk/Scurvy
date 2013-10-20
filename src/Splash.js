@@ -1,5 +1,5 @@
 var Splash = function(x, y) {
-    var tempName = GetRandomPerson();
+    var tempName = WordSmith.getCrewName ();
     this._x = x;
     this._y = y;
     this.texts = [
