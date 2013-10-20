@@ -273,7 +273,7 @@ Game.prototype.buyItem = function (type) {
         G.log ("%c{green}{0}%c{} Git!".format(type));
     } else {
         var need = cost - this.ship.doubloons;
-        G.log ("Need %c{yellow}{0} more doubloons%c{} for the %c{green}{1}%c{}.".format(
+        G.log ("The %c{green}{1}%c{} is too much. Need %c{yellow}{0} more doubloons%c{}.".format(
             need,
             type
         ));

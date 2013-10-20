@@ -313,6 +313,9 @@ Ship.prototype.getItemString = function() {
     } else if (ItemType.Cannon_1 in this.has) {
         result += "Ⅰ";
     }
+    if (ItemType.Telescope in this.has) {
+        result += "⦿";
+    }
     return result;
 };
 
