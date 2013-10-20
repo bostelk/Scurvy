@@ -95,7 +95,7 @@ Ship.prototype.wait = function () {
     G.spendDays (1);
     var success = this.fixShip();
     if (!success) {
-        G.log ("Nothing interesting happens. A day goes by.");
+        G.log ("Nothing interesting happens. %c{teal}{0} day%{} goes by.".format(1));
     }
 };
 
@@ -129,7 +129,7 @@ Ship.prototype.move = function (x, y) {
             var captain = this.getMemberOfRank (Crew.RankEnum.Captain);
             var days = Random.betweeni (1, 7);
             G.spendDays (days);
-            G.log ("{0} is seasick; %c{red}{1} days%c{} are lost at sea.".format (
+            G.log ("{0} is seasick; %c{teal}{1} days%c{} are lost at sea.".format (
                 captain.name,
                 days
             ));
