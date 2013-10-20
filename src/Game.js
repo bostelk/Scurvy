@@ -224,7 +224,7 @@ Game.prototype.enterState = function (state) {
 
                 totalDays += (voyage.end - voyage.start) / (60 * 60 * 24 * 1000);
                 if ("pirates_sunk" in voyage) {
-                    totalPiratesSunk += voyage;
+                    totalPiratesSunk += voyage["pirates_sunk"];
                 }
             }
 

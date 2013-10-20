@@ -16,7 +16,11 @@ PirateShip.prototype.loseHealth = function (amount) {
     if (this.health <= 0) {
         this.removeNextUpdate = true;
         var voyage = G.voyages [G.voyages.length - 1];
-        voyage["pirates_sunk"] += 1;
+        if ("pirates_sunk" in voyage) {
+            voyage["pirates_sunk"] += 1;
+        } else {
+            voyage["pirates_sunk"] = 1;
+        }
         G.log ("%c{purple}{0}%c{} sinks to the bottom of the ocean.".format (this.name));
     }
 };
