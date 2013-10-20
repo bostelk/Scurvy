@@ -48,8 +48,6 @@ Splash.prototype.tick = function() {
 };
 
 Splash.prototype.draw = function() {
-    var splash = document.getElementByTag("pre");
-    splosh.innerHTML = SplashBoatSplash[ Random.betweeni(0,2)]; 
     for (var i = 0; i < this.texts.length; i++) {
         var text = this.texts [i];
         G.display.drawText(this._x, this._y + i, text, "red");
