@@ -48,11 +48,15 @@ Ship.prototype.sail = function (rate) {
     this.sailSpeed = rate;
     var crewEff = this.getCrewEff ();
     var shipEff = this.getShipEff ();
-    console.log("{0}, {1}".format(this.sailSpeed, SailRate.HALF));
+
     if ( this.sailSpeed == SailRate.HALF ){
         this.move (this._x + 1, this._y);
     } else {
-        this.move ( this._x + 2, this._y);
+        // when we're close to the edge switch to moving one tile.
+        if (!G.map.canMove (this._x + 2, this._y))
+            this.move (this._x + 1, this._y);
+        else
+            this.move (this._x + 2, this._y);
     }
 
     // game over bro.
