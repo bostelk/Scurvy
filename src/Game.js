@@ -78,7 +78,7 @@ Game.prototype.tick = function () {
         case GameState.TITLE:
             this.splash.tick ();
             if (this.splash.finished)
-                this.switchState (GameState.VOYAGE);
+                this.switchState (GameState.PORT);
             break;
     }
 
