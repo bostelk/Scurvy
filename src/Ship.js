@@ -264,7 +264,7 @@ Ship.prototype.fixShip = function() {
     this.gainHealth (returnedHealth);
     var difference = this.health - prevHealth;
     if ( difference > 0 ) {
-        G.log("{0} repaired ship for %c{green}{1}%c{}.".format(
+        G.log("{0} repaired the hull for %c{green}{1}%c{}.".format(
             bosun.name,
             difference
         ));
@@ -291,7 +291,7 @@ Ship.prototype.consumeFood = function() {
         else {
             member.hunger -= (member.hunger == Crew.HungerEnum.Starving) ? 0 : 1;
             if (member.hunger == Crew.HungerEnum.Starving) {
-                member.morale -= (member.morale == Crew.MoralEnum.Mutinous) ? 0 : 1;
+                member.morale -= (member.morale == Crew.MoraleEnum.Mutinous) ? 0 : 1;
             }
         }
         console.log( member.name + " is now " + Crew.HungerValues[member.hunger]);
