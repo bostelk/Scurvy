@@ -15,6 +15,8 @@ Crew.getCost = function(rank) {
             return 500;
         case Crew.RankEnum.Cook:
             return 300;
+        case Crew.RankEnum.Bosun:
+            return 200;
         case Crew.RankEnum.DeckHand:
             return 100;
         default:

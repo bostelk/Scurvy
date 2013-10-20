@@ -70,6 +70,16 @@ Ship.prototype.getShipEff = function () {
     return this.health/this.maxHealth;
 }
 
+Ship.prototype.getRepairEff = function () {
+    var bosunCrew = 0;
+    for ( var i = 0; i < this.crewMembers.length; i++ ) {
+        if ( this.crewMembers[i].rank == Crew.RankEnum.Bosun ) {
+         bosunCrew++;
+        }
+    }
+    return bosunCrew / 4;
+};
+
 Ship.prototype.wait = function () {
     G.spendDays (1);
     var success = this.fixShip();
@@ -232,7 +242,7 @@ Ship.prototype.fixShip = function() {
     if (bosun == null)
         return;
 
-    returnedHealth = Random.betweeni(5, 20);
+    returnedHealth = Math.floor (Random.betweeni(5, 20) * this.getRepairEff () * this.getCrewEff ());
     var prevHealth = this.health;
     this.gainHealth (returnedHealth);
     var difference = this.health - prevHealth;
