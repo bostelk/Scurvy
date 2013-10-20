@@ -1,16 +1,46 @@
 var Splash = function(x, y) {
-    var tempName = WordSmith.getCrewName ();
+    var imgToShow =0;
+    var tempName = WordSmith.getCrewName();
     this._x = x;
     this._y = y;
+    var variableLength = tempName.length + 3;
+    var middleLine = "";
+    var dashes = "";
+    var zeros = "";
+    console.log( variableLength );
+
+    if ( variableLength % 2 == 0 ) {
+        var dashCount = (80 - tempName.length) / 2;
+        var dashes = "";
+        for ( var i = 0; i < dashCount; i++ ) {
+            dashes += "-";
+        }
+        middleLine = dashes + "By:" + tempName + dashes;
+    } else {
+        var dashCount = ((80 - tempName.length) - 1) / 2;
+        var dashes = "";
+        for ( var i = 0; i < dashCount; i++ ) {
+            dashes += "-";
+        }
+        middleLine = dashes + "By:" + tempName + dashes;
+    }
+
+    for ( var i = 1; i <= variableLength; ++i ) {
+        zeros += "0";
+    }
+
     this.texts = [
-        "--------------------0000000000000---------------",
-        "--------------------0000000000000---------------",
-        "-----------------------SCUVRY--------------------",
-        "-------------By:" + tempName + "-------------------",
-        "--------------------0000000000000---------------",
+        dashes + zeros + dashes,
+        dashes + zeros + dashes,
+        "--------------------------------------SCURVY-------------------------------------",
+        middleLine,
+        dashes + zeros + dashes,
+        dashes + zeros + dashes,
     ];
     this.finised = false;
-}
+};
+
+
 
 Splash.prototype.tick = function() {
     this._y += 1 * G._deltaSeconds;
@@ -18,6 +48,8 @@ Splash.prototype.tick = function() {
 };
 
 Splash.prototype.draw = function() {
+    var splash = document.getElementByTag("pre");
+    splosh.innerHTML = SplashBoatSplash[ Random.betweeni(0,2)]; 
     for (var i = 0; i < this.texts.length; i++) {
         var text = this.texts [i];
         G.display.drawText(this._x, this._y + i, text, "red");
