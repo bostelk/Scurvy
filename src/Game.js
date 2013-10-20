@@ -134,15 +134,22 @@ Game.prototype.drawStatus = function () {
 Game.prototype.enterState = function (state) {
     switch (this.state) {
         case GameState.TITLE:
+            document.getElementById("title").style.display = "block";
+            document.getElementById("start_voyage").style.display = "none";
+            document.getElementById("voyage").style.display = "none";
             break;
         case GameState.START_VOYAGE:
             document.getElementById("start_voyage").style.display = "block";
+            document.getElementById("title").style.display = "none";
             document.getElementById("voyage").style.display = "none";
+
+            //G.log ("Gather supplies for your voyage.");
             break;
         case GameState.VOYAGE:
             this.display.clear();
-            document.getElementById("start_voyage").style.display = "none";
             document.getElementById("voyage").style.display = "block";
+            document.getElementById("title").style.display = "none";
+            document.getElementById("start_voyage").style.display = "none";
             break;
         case GameState.END_VOYAGE:
             break;

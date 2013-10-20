@@ -50,6 +50,9 @@ ___________________________________________________________________
         </pre>
         <div id="screen"></div>
         <div id="controls">
+            <div id="title">
+                <button onclick="G.switchState(GameState.VOYAGE);">Skip</button>
+            </div>
             <div id="start_voyage">
                 <button onclick="G.buyFood (100)">Buy Food (100)</button>
                 <button onclick="G.sellFood (100)">Sell Food (100)</button>
@@ -68,7 +71,6 @@ ___________________________________________________________________
                 <button onclick="G.ship.sail(SailRate.HALF);">Half Sail</button>
                 <button onclick="G.ship.wait();">Wait a day</button>
             </div>
-            <button onclick="G.switchState(GameState.VOYAGE);">Skip Title</button>
             <button onclick="G.ship.displayMorale();">Crew Info</button>
         </div>
     </body>
