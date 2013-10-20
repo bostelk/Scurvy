@@ -60,7 +60,7 @@ Ship.prototype.sail = function (rate) {
     }
 
     // game over bro.
-    if (this.crewMembers.length == 0 && this.health == 0) {
+    if (this.health == 0) {
         G.switchState (GameState.GAME_OVER);
     }
 
