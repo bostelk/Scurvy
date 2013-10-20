@@ -264,7 +264,7 @@ Ship.prototype.fixShip = function() {
     this.gainHealth (returnedHealth);
     var difference = this.health - prevHealth;
     if ( difference > 0 ) {
-        G.log("{0} repaired ship for %c{green}{1}%c{}.".format(
+        G.log("{0} repaired the hull for %c{green}{1}%c{}.".format(
             bosun.name,
             difference
         ));
